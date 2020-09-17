@@ -1,0 +1,5 @@
+This is test data to be used for Lab exercise 1.
+This file contains some strings and the idea is to                   
+replace substrings by other substrings.
+stuttering statistical storms and tempests!
+

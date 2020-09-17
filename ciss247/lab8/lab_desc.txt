@@ -1,0 +1,213 @@
+Objective
+
+ 1.   Practice reverse engineering of executable software.
+
+Submitting Your Work
+
+Save your C program files as Exercise1.c, Exercise2.c and Exercise3.c and submit them and your report via the Lab Exercise Submission item on the course web site.  
+Introduction
+
+The aim of this exercise is to reverse engineer an executable program by using the disassemble capability of the gdb debug utility.
+How to Reverse Engineer and Executable file
+
+We start by writing and compiling a simple C program.  We compile this program with gcc and then run the program within the gdb debug environment.  In gdb, we use the disassemble command to convert the machine language of the program back to assembly language.  This will show us where the variables in the program are stored and how the statements of the C program are implemented in assembly language.
+
+    Save the following C program as c
+
+int main() {
+
+ 
+
+    int x, y;
+
+ 
+
+    x = 10;
+
+    y = 15;
+
+    x = y-x;
+
+    y = x+y;
+
+}
+
+ 
+
+    Compile the program:
+
+gcc -o sample sample.c
+
+    Run the program in gdb:
+
+gdb ./sample
+
+You will see the following output (all of which you can ignore):
+
+GNU gdb (Ubuntu 7.11.1-0ubuntu1~16.04) 7.11.1
+
+Copyright (C) 2016 Free Software Foundation, Inc.
+
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+
+This is free software: you are free to change and redistribute it.
+
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+
+and "show warranty" for details.
+
+This GDB was configured as "x86_64-linux-gnu".
+
+Type "show configuration" for configuration details.
+
+For bug reporting instructions, please see:
+
+<http://www.gnu.org/software/gdb/bugs/>.
+
+Find the GDB manual and other documentation resources online at:
+
+<http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+
+Type "apropos word" to search for commands related to "word"...
+
+Reading symbols from ./sample...(no debugging symbols found)...done.
+
+(gdb)
+
+    At the (gdb) prompt, set a breakpoint at the start of the main() function of the program by using the b This will make the program pause when it starts executing the main() function.
+
+(gdb) b main
+
+You will see the following output:
+
+Breakpoint 1 at 0x4004da
+
+(gdb)
+
+    At the (gdb) prompt, run the program by using the r command:
+
+(gdb) r
+
+You will see the following output:
+
+Starting program: /home/david/CSCI247Fa2016/Labs/Lab5/sample
+
+ 
+
+Breakpoint 1, 0x00000000004004da in main ()
+
+(gdb)
+
+ 
+
+    Execution of the program has paused at the breakpoint. We can now disassemble the program by entering the disassemble command at the (gdb) prompt:
+
+(gdb) disassemble
+
+You will see the following output (or something similar):
+
+Dump of assembler code for function main:
+
+   0x00000000004004d6 <+0>:  push   %rbp
+
+   0x00000000004004d7 <+1>:  mov    %rsp,%rbp
+
+=> 0x00000000004004da <+4>:  movl   $0xa,-0x8(%rbp)
+
+   0x00000000004004e1 <+11>: movl   $0xf,-0x4(%rbp)
+
+   0x00000000004004e8 <+18>: mov    -0x4(%rbp),%eax
+
+   0x00000000004004eb <+21>: sub    -0x8(%rbp),%eax
+
+   0x00000000004004ee <+24>: mov    %eax,-0x8(%rbp)
+
+   0x00000000004004f1 <+27>: mov    -0x8(%rbp),%eax
+
+   0x00000000004004f4 <+30>: add    %eax,-0x4(%rbp)
+
+   0x00000000004004f7 <+33>: mov    $0x0,%eax
+
+   0x00000000004004fc <+38>: pop    %rbp
+
+   0x00000000004004fd <+39>: retq  
+
+End of assembler dump.
+
+(gdb)
+
+Note that %rbp (the base pointer) is set to the top of the stack.  The local variables x and y are stored on the stack at positions beyond the base pointer.  Since x and y are both int, each requires 4 bytes so their values are stored at addresses -0x8(%rbp) and -0x4(%rbp), respectively.
+
+Here's the assembly instructions again, with annotations:
+
+push   %rbp
+	
+
+# save the old value of %rbp
+
+mov    %rsp,%rbp
+	
+
+# set %rbp to the value of %rsp
+
+movl   $0xa,-0x8(%rbp)
+	
+
+# x = 10
+
+movl   $0xf,-0x4(%rbp)
+	
+
+# y = 15
+
+mov    -0x4(%rbp),%eax
+	
+
+# load y into %eax
+
+sub    -0x8(%rbp),%eax
+	
+
+# y - x is now in %eax
+
+mov    %eax,-0x8(%rbp)
+	
+
+# x = y - x
+
+mov    -0x8(%rbp),%eax
+	
+
+# load x into %eax
+
+add    %eax,-0x4(%rbp)
+	
+
+# y = x + y
+
+mov    $0x0,%eax
+	
+
+ 
+
+pop    %rbp
+	
+
+# restore the old value of %rbp
+
+retq  
+	
+
+# return from main()
+
+ 
+
+Now see if you can reverse engineer the executable programs provided on the course web site: Example1, Example2 and Example3.
+
+Note: you need to ensure that you have execute permission for these files.  To do this, use the following commands:
+
+chmod u+x Example1
+chmod u+x Example2
+chmod u+x Example3
