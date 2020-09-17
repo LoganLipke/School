@@ -1,0 +1,207 @@
+Introduction
+
+Your task is to write a program to decrypt an encrypted file.  You will be provided with an encrypted message and the encryption key used for encrypting that message.  Your aim is to decrypt the encrypted file, to recover the original plaintext message.  The method used to encrypt the message is described below.
+Encryption key
+
+Both the encryption and decryption algorithms use the same 8-character encryption key.  This key is split into its two halves of 4 characters each.  Each 4-character half-key is reduced from 32 bits to 28 bits by discarding the most significant bit of each character (which is always 0 for all the characters on the keyboard).
+
+For example, given the key "password", the first 4 characters are "pass", which is represented by the following 4 bytes:
+
+01110000,  01100001,  01110011,  01110011
+
+These bytes are reduced to septets (sequences of 7 bits):
+
+1110000,  1100001,  1110011,  1110011
+
+and those septets are combined into a 28-bit integer (which you may store in a 32-bit int or unsigned int variable):
+
+key1 = 1110000  1100001  1110011  1110011
+
+Similarly, the second half of the key, "word", which is represented by the following 4 bytes:
+
+01110111,  01101111,  01110010,  01100100
+
+is reduced to the 28 bits:
+
+key2 = 1110111 1101111 1110010 1100100
+Encryption
+
+The encryption algorithm encrypts 4 characters of plaintext at a time, repeating the same procedure for each sequence of 4 characters.  If the plaintext message is not a multiple of 4 characters, the encryption method pads it out with spaces to make it a multiple of 4 characters.
+
+Encryption proceeds by the following steps:
+
+    Reduce bytes: Each of the 4 characters from the plaintext is reduced from 8 bits to 7 bits, using the same method as used on each half of the key.  The most significant bit for each character is discarded.
+
+For example, if the 4 plaintext characters are ‘T’, ‘h’, ‘i’, ‘s’, they represented by the 4 bytes
+
+01010100,  01101000,  01101001,  01110011 
+
+These are reduced to the four septets:
+
+1010100,  1101000,  1101001,  1110011
+
+    Rotate septets: Each septet is rotated to the right by 3 bits.  For the septets resulting from the previous step, this produces:
+
+1001010  0001101  0011101  0111110
+
+    Form an integer: Combine the 4 septets into a sequence of 28 bits, to be stored in a 32-bit integer.  For the four septets from the previous step, this results in the 32-bit integer:
+
+0000  1001010  0001101  0011101  0111110
+
+    Exclusive OR with key1: The 28 bits resulting from the previous step is XORed with key1:
+
+            1001010 0001101 0011101 0111110
+xor       1110000 1100001 1110011 1110011
+            0111010 1101100 1101110 1001101
+
+    Shuffle Nibbles: The 28 bits from the previous step are now considered as a sequence of seven 4-bits sequences.  Since 8 bits make a byte, a 4-bit sequence is commonly called a "nibble" – cute, huh?  (Note: some students in the class prefer the spelling “nybble”, but my spell-checker will not tolerate that!)  The nibbles are shuffled in the following way:
+
+CSCI247_Su2017_Assg1.PNG
+
+The 28-bit sequence    0111  0101  1011  0011  0111  0100  1101 is shuffled to:
+                                     0011  0100  0111  1101  1011  0101  0111
+
+    Exclusive OR with key2: The 28 bits resulting from the previous step is XORed with key2:
+
+            0011  0100  0111  1101  1011  0101  0111
+xor       1110  1111  1011  1111  1001  0110  0100
+            1101  1011  1100  0010  0010  0011  0011
+
+    Produce ciphertext: The 28 bits resulting from the previous step are now output as ciphertext, with one hexadecimal digit for each nibble:
+
+1101  1011  1100  0010  0010  0011  0011
+   D       B        C       2        2        3        3
+
+    Summary: The four plaintext characters "This" are encrypted as the seven hexadecimal digits "DBC2233".  The encryption algorithm repeats this process with each remaining sequence of 4 characters of plaintext.
+
+Decryption
+
+Decryption uses the same key as used for encryption, producing the two 28-bit keys key1 and key2, described above.
+
+Decryption proceeds by reversing the steps used by the encryption method.  It repeatedly uses the following steps for each sequence of seven hexadecimal digits.  You should write a function for each step, perhaps using other functions.
+
+    Convert seven digits to an integer: The decryption program reads a file of characters, each representing a hexadecimal digit.  The program first needs to convert a sequence of 7 characters into an integer number.  This may be easily done by using the fgets() and sscanf() functions, declared in stdio.h, as shown below:
+
+    char line[8];
+
+    unsigned int bits;
+
+   
+
+    // Get the next 7 characters of input (leaving space for the null at the end)
+
+    while (fgets(line, 8, stdin))
+
+                       
+
+        // convert to a number
+
+        sscanf(line, "%x", &bits);
+
+ 
+
+    Exclusive OR with key2: The 28 bits of ciphertext is XORed with key2:
+
+            1101  1011  1100  0010  0010  0011  0011 
+xor       1110  1111  1011  1111  1001  0110  0100
+            0011  0100  0111  1101  1011  0101  0111
+
+Note: to reverse the effect of an XOR operation, simply apply the XOR again.
+
+    Shuffle the Nibbles: Simply reverse the shuffle used by the encryption algorithm:
+
+0011  0100  0111  1101  1011  0101  0111  is shuffled to:
+0111  0101  1011  0011  0111  0100  1101
+
+    Exclusive OR with key1:
+
+            0111  0101  1011  0011  0111  0100  1101 
+xor       1110  0001  1000  0111  1001  1111  0011
+            1001  0100  0011  0100  1110  1011  1110
+
+    Rotate septets: Now group the 28 bits in four 7-bit septets.  Each septet is rotated to the left by 3 bits.  For the 28 bits resulting from the previous step:
+
+1001010  0001101  0011101  0111110
+
+this produces:
+
+1010100  1101000  1101001  1110011
+
+    Translate septets to characters: Each septet (7-bit sequence) is now replaced by the character which has that bit representation.
+
+1010100  1101000  1101001  1110011
+      T              h             i               s
+
+    Summary: The seven hexadecimal digits "DBC2233" are decrypted to the four plaintext characters "This".  The decryption algorithm repeats this process with each remaining sequence of 7 hexadecimal digits of the encrypted message.
+
+Running the Decryption Program
+
+The decryption program is to:
+
+    Get the key from the command line,
+    Read its input ciphertext from stdin (“standard in, the keyboard, by default) and
+    Write its output plaintext to stdout (“standard out”, the terminal window where you run the program.
+
+Example:
+
+> ./Decrypt password
+DBC2233                      (this is input from the keyboard)
+This                         (this is output to the terminal window)
+
+Stdin may be redirected to read input from a file, instead of the keyboard by use of the < redirection symbol on the command line:
+
+> ./Decrypt Password < cipher.txt
+This                         (this is output to the terminal window)
+
+Similarly, output may be redirected to a file, instead of being written to the terminal window by using the > redirection symbol on the command line:
+
+> ./Decrypt password > plain.txt
+DBC2233                      (this is input from the keyboard)
+
+Both input and output redirection may be used in the same command:
+
+> ./Decrypt password < cipher.txt > plain.txt
+Hints
+
+One of the files has password as it's password.  The other one is unknown.  If you want it, do a little cracking and figure out what it is.  If you get it right you will know it.
+
+The following functions will be useful for some of the decryption steps:
+
+void get_keys (char *twokeys,
+               unsigned *key1,
+               unsigned *key2)
+	
+
+extracts two 28-bit keys from 4 bytes
+
+unsigned int get_n_bits (unsigned bits, 
+                         int width, 
+                         int index)
+	
+
+returns the integer value of a specified subsequence of 32 bits
+
+width is the number of bits to be extracted
+
+index * width is the index of the rightmost bit to extract
+
+unsigned int rotate_left3(unsigned bits)
+	
+
+given a sequence of 7 bits, rotate 3 bits to the left
+
+void shuffle_nibbles (unsigned *bits)
+	
+
+shuffle the 7 nibbles according to the pattern
+
+void decode_28bits (unsigned cipher,
+                    char *plain,
+                    unsigned key1,
+                    unsigned key2)
+	
+
+decode a block of 28 bits
+Submitting Your Work
+
+Save your C program file as Decrypt.c and submit it and the required report (see files).  

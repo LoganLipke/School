@@ -1,0 +1,96 @@
+Objective
+
+ 1.   Understand how ARMv8 instructions function.
+
+ 
+Submitting Your Work
+
+Save your C program file as ARM.c and submit it and your report via the Lab Exercise 4 Submission item on the course web site.  Remember to do thorough testing and devote sufficient time to your lab report.
+
+ 
+Introduction
+
+Your task for this lab is to write a program that simulates the execution of at least 7 ARM instructions.  At least one instruction must be a branch instruction (see p. 64 of P&H for instruction set).  The program will have an array that represents the general ARM registers and a second multi-dimensional array that represents memory.   The program will read content into the memory array from a file, execute the instructions it finds in the array one instruction at a time, and print the contents of the registers after each instruction.  
+
+    The program will implement at least the following instructions: ADD, ADDI, LDUR, STUR, B, at least one other arithmetic or logical instruction, and at least one logical branch instruction.
+    Instructions in memory will use the assembly mnemonics rather than binary op codes.
+    Instruction arguments will be register aliases (ex. X0, X1, X2, …) memory locations in the memory array (100, 104, …), or immediate values (#-3, #5, #0, …).
+    Load and store instructions will only use indirect addressing (ie. [Xn, #nn] ).
+    The program should use the specific address - 200, as the default address for the start instructions in memory.
+    The program can limit the number of registers available for use in the program. At least 6 must be available, including X0, X1, X9, X10.
+    The program must implement a Program Counter (PC).
+    Branch instructions will use immediate or register addressing.
+    Addressing will use decimal numbering to ease calculations. For this exercise, each memory field is whatever size is needed, or provided for in the array.
+    Instructions in memory must be on word boundaries (increment by 4).
+    Data and immediates will be signed integers with no size restrictions.
+
+ 
+
+Test Files:
+
+Students will write a test file to be used with their emulator.  The program must be able to read the name of the file as an argument.  Students may include a default filename for use if the argument is not used.
+
+The instructions in the file to be executed must include:
+
+    At least one example of each instruction implemented.
+    At least 10 instructions.
+    Instructions to complete at least one loop.
+
+The first instruction to be executed must be at location 200.
+
+Each line in the file must have five fields.  Unused fields will be set to 0.
+
+Additional test files may be used in grading the assignment. 
+SAMPLE FILE
+
+The output below would be generated from a file code.txt, with the content (see files) :
+
+100 512 0 0 0
+
+104 24 0 0 0
+
+108 22 0 0
+
+200 ADDI X0, XZR, #100
+
+204 LDUR X9, [X0, #0]
+
+208 ADDI X0, X0, #4
+
+212 LDUR X10, [X0, #4]
+
+216 ADD X9, X9, X10
+
+ 
+Output
+
+The output of the program will be a listing showing the progress of the program counter, the instruction at the program counter location, and the values of any registers used in that instruction.   Additional information, such as the value of all registers, or other useful items may be shown as well.
+
+*note: only registers affected need be displayed, or alternately, only a subset consisting of the registers used in the program – or available for use in the program need to be displayed.
+
+**note:  The format of the output does not need to be exactly the same as shown.  Only the information needs to be provided.
+
+***note: PC value shown at completion of the instruction.  I.e. pointing to next instruction.
+SAMPLE OUTPUT
+
+(Note:  This shows only the result of executing the first two instructions of code.txt).
+
+PC = 204, Instruction: ADDI X0, XZR, #100
+
+Registers: X0 = 100
+
+PC = 208, Instruction:   LDUR X9, [X0, #0]
+
+Registers:  X0 = 100, X9 = 512
+ 
+HINTS
+
+It will be useful to implement each supported instruction as a function.
+
+A loop with a switch statement can iterate through the instructions.
+
+Read a line, parse into five strings, convert to numbers only when needed (reading addresses, data or immediate values).
+
+You may use functions such as strncpy and atoi for this lab.  All functions used should be “safe” functions.
+
+The program will consist of two parts – parsing (loading), and executing.

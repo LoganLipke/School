@@ -1,0 +1,123 @@
+Objectives
+
+ 1.   Performing number conversions.
+ 2.   More practice with characters integers, characters, strings and functions in C.
+
+Submitting Your Work
+
+Submit your C program files and report as via the Lab Exercise 2 Submission item on the course web site. You must submit your program by 11:59 PM two days after your scheduled lab session.
+Introduction
+
+Your task for this lab is to complete a C program that will add two numbers, both specified in the same number system, with base value from 2 to 36.  Each number will be represented as a character string, using the characters '0' through '9' and 'a' through 'z' (or 'A' through 'Z').  The characters '0' through '9' have their usual decimal numeric value 0 through 9.  The characters 'a' through 'z' (or 'A' through 'Z') have the decimal numeric values 10 through 35.
+
+The program will use three command-line arguments for the number base and the two numbers that are to be added.
+Examples
+
+Here are some examples of use of the program:
+
+> ./Lab2 10 2976 3845
+
+In base 10, 2976 + 3845 = 6821
+
+> ./Lab2 16 2CE 3FF
+
+In base 16, 2CE + 3FF = 6CD
+
+> ./Lab2 24 H3 5g
+
+In base 24, H3 + 5g = MJ
+
+> ./Lab2 36 H1Z LY6
+
+In base 36, H1Z + LY6 = 1305
+
+> ./Lab2 2 1011011010 1001111101
+
+In base 2, 1011011010 + 1001111101 = 10101010111
+
+The program will display an error message and terminate if the command-line arguments are invalid:
+
+> ./Lab2 40 1011011010 1001111101
+
+Usage: ./Lab2 base num1 num2
+
+base must be in the range 2 to 36
+
+> ./Lab2 2 10131011010 10051111101
+
+invalid digit 3 for base 2
+
+> ./Lab2 8 15
+
+Usage: ./Lab2 base num1 num2
+What You Need to Do
+
+For this program you start with an existing, but incomplete program Lab2.c, which is available in the Lab2 folder on the course web site.  The existing program uses two functions toDecimal() and fromDecimal() which are declared, but not defined in Lab2.c.  Your task is to complete the definitions of those functions.  Here are the declarations of the functions:
+
+int toDecimal(int base, 
+              char *number);
+	
+
+This function returns the decimal value of a number expressed in a specified base.
+parameters:
+      base, integer value of the number system 
+      number, the number to be converted to decimal
+return:
+      the decimal value of number
+example:
+      toDecimal(16, "2E") returns 46
+
+char *fromDecimal(
+          int base,
+          int decimal, 
+          char *number);
+	
+
+This function returns a string as the result of converting a decimal number to a specified base
+parameters:
+      base, the base of the number system to convert to
+      decimal, the decimal value to convert from
+      number, a string to contain the result
+return:
+      pointer to the string containing the result
+example:
+  char text[WIDTH];
+  fromDecimal(16, 46, text);
+  text contains the string "2E"
+Note:
+
+Your toDecimal() and fromDecimal() functions must not use any C library functions, but may use the provided functions digitChar() and digitValue(), described below.
+
+char digitChar(int value, 
+               int base)
+	
+
+This function returns the character for the digit with value in base.
+parameters:
+      value, the decimal value of the digit
+      base, the decimal value of the number system base
+return:
+      character in the range '0'-'9' or 'A'-'Z'
+
+int digitValue(char digit,
+               int base)
+	
+
+This function returns the decimal value of a digit character.
+digit must be in the range '0'-'9', 'a'-'z', or 'A'-'Z'
+digit value must be less than base
+parameters:
+      digit, the character whose value is to be returned
+      base, the number base, to check range
+return:
+      decimal value of digit
+
+After modifying Lab2.c, compile it to produce the executable file Lab2:
+
+gcc –Wall –o Lab2 Lab2.c
+
+Then you can run the program, as shown in the examples above.
+
+Submit
+
+Your program and report.
