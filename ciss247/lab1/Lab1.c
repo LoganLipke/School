@@ -1,8 +1,8 @@
 /*
  * Lab1.c
- * CSCI 247, Lab exercise 1, Fall, 2017
+ * CSCI 247, Lab exercise 1, Fall, 2020
  * 
- * Trevin Morrison, October, 2017
+ * Logan Lipke
  * 
  */
 
