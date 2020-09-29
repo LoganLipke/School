@@ -25,16 +25,18 @@
 int find(char *substr, char *str);
 
 int find(char *substr, char *str) {
-	substr[] = "st";    //string to find  *** substr is already defined when the function is called.  It doesn't need to be set again.
-	int pos = -1;        // return value
+	substr = "st";        //string to find  *** substr is already defined when the function is called.  It doesn't need to be set again.
+	int pos = -1;           // return value
 	int len = strlen(str);  //length of passed string
-	while (int i = 0; i < len; i++) { //continue loop until the end of string
- 		if (str[i] == substr[0]) && (((str[i+1]) != '\0')) && ((str[i+1]) == substr[1])) {
+	for (int i = 0; i < len; i++)
+    {                       //continue loop until the end of string
+ 		if ((str[i] == substr[0]) && (str[i+1] != '\0') && (str[i+1] == substr[1]))
+        {
 		 	pos = i; //^ If it starts with S, and if it can continue, if the next has a t
 			break;
  		}
 	}
-	return int pos;
+	return pos;
 }
 
 // function replace
@@ -46,14 +48,11 @@ int find(char *substr, char *str) {
 void replace(char *str, int pos, char *substr);
 
 void replace(char *str, int pos, char *substr) {
-		substr[] = "st";     //string to find *** already set.
-		str[pos] = substr[0];  //set at position to 's'  ***this only works for two character strings.  How would you make it work for any length of string?
-		str[pos+1] = substr[1];  //set string at 2nd from position to 't'
-	return void;
+		substr[MAX_LINE] = "st";     //string to find *** already set.
+		str[pos] = substr[0];        //set at position to 's'  ***this only works for two character strings.  How would you make it work for any length of string?
+		str[pos+1] = substr[1];      //set string at 2nd from position to 't'
+	return;
 }
-
- 	
-
 
 
 int main (int argc, char *argv[]) {
