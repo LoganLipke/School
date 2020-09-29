@@ -9,7 +9,9 @@ Submitting Your Work
 Submit your C program files and report as via the Lab Exercise 1 Submission item on the course web site.  You must submit your program by 11:59 PM two days after your scheduled lab session.
 Introduction
 
-Your task for this lab is to complete a C program that performs substring substitution on lines of text read from stdin.  The program ensures that the substring to be replaced and the substring it is to be replaced with are of exactly the same length.    For example, if the file data.txt contains
+Your task for this lab is to complete a C program that performs substring substitution on lines of text read from stdin.  
+The program ensures that the substring to be replaced and the substring it is to be replaced with are of exactly the same length.    
+For example, if the file data.txt contains
 
 This is test data to be used for Lab exercise 1.
 
@@ -43,7 +45,9 @@ xxuttering xxatixxical xxorms and tempexxs!
 
  
 
-For this program you start with an existing, but incomplete program Lab1.c, which is available in the Lab1 folder on the course web site.  The existing program uses two functions find() and replace() which are declared, but not defined in Lab1.c.  Your task is to complete the definitions of those functions.  Here are the declarations of the functions:
+For this program you start with an existing, but incomplete program Lab1.c, which is available in the Lab1 folder on the course web site.  
+The existing program uses two functions find() and replace() which are declared, but not defined in Lab1.c.  
+Your task is to complete the definitions of those functions.  Here are the declarations of the functions:
 
 int find(char *substr, 
          char *str)
@@ -55,7 +59,9 @@ For example,
 find("st", "substitute substring"); 
 will return the value 3.
 
-Note:  There are functions in the C library, which can do this task, however, you are NOT permitted to use them.  You may only use the library function strlen(), which will tell you the number of characters in a string.  In order to use that function you should include the header file string.h.
+Note:  There are functions in the C library, which can do this task, however, you are NOT permitted to use them.  
+You may only use the library function strlen(), which will tell you the number of characters in a string.  
+In order to use that function you should include the header file string.h.
 
 void replace(char *str,
              int  pos, 
