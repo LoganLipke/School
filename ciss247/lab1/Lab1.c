@@ -6,8 +6,6 @@
  * 
  */
 
-
-
 #include <stdio.h>
 #include <string.h>
 
@@ -24,23 +22,9 @@
 
 int find(char *substr, char *str);
 
-// int find(char *substr, char *str) {
-// 	substr = "st";        //string to find  *** substr is already defined when the function is called.  It doesn't need to be set again.
-// 	int pos = -1;           // return value
-// 	int len = strlen(str);  //length of passed string
-// 	for (int i = 0; i < len; i++)
-//     {                       //continue loop until the end of string
-//  		if ((str[i] == substr[0]) && (str[i+1] != '\0') && (str[i+1] == substr[1]))
-//         {
-// 		 	pos = i; //^ If it starts with S, and if it can continue, if the next has a t
-// 			break;
-//  		}
-// 	}
-// 	return pos;
-// }
-
-int find(char * substr, char * str)
-{       // This  version of find will work with any length of substr by using nested for loops over the str and substr
+int find(char *substr, char *str)
+{       
+    // This function will work with any length of substr by using nested for loops over the str and substr
     for (int i = 0; i < strlen(str); i++)
     {   
         int count = 0;
@@ -53,8 +37,6 @@ int find(char * substr, char * str)
     return -1;
 }
 
-
-
 // function replace
 // replace part of a string by another string
 // parameters:
@@ -62,15 +44,10 @@ int find(char * substr, char * str)
 //      pos: the index in str where the modified string is to start
 //      newstr: the substring to be used to modify str
 void replace(char *str, int pos, char *substr);
-
-// void replace(char *str, int pos, char *substr) {
-// 		substr = "st";     //string to find *** already set.
-// 		str[pos] = substr[0];        //set at position to 's'  ***this only works for two character strings.  How would you make it work for any length of string?
-// 		str[pos+1] = substr[1];      //set string at 2nd from position to 't'
-// }
         
-void replace(char *str, int pos, char *substr) {        
-        // This  version of replace will work with any length of substr by looping over the substr and using it as an offset for the str index
+void replace(char *str, int pos, char *substr) 
+{        
+        // This function will work with any length of substr by looping over the substr and using it as an offset for the str index
         for (int i = 0; i < strlen(substr); i++)
             str[pos + i] = substr[i];
 	return;
