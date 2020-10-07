@@ -8,7 +8,10 @@ Submitting Your Work
 Submit your C program files and report as via the Lab Exercise 2 Submission item on the course web site. You must submit your program by 11:59 PM two days after your scheduled lab session.
 Introduction
 
-Your task for this lab is to complete a C program that will add two numbers, both specified in the same number system, with base value from 2 to 36.  Each number will be represented as a character string, using the characters '0' through '9' and 'a' through 'z' (or 'A' through 'Z').  The characters '0' through '9' have their usual decimal numeric value 0 through 9.  The characters 'a' through 'z' (or 'A' through 'Z') have the decimal numeric values 10 through 35.
+Your task for this lab is to complete a C program that will add two numbers, both specified in the same number system, with base value from 2 to 36.  
+Each number will be represented as a character string, using the characters '0' through '9' and 'a' through 'z' (or 'A' through 'Z').  
+The characters '0' through '9' have their usual decimal numeric value 0 through 9.  The characters 'a' through 'z' (or 'A' through 'Z') 
+have the decimal numeric values 10 through 35.
 
 The program will use three command-line arguments for the number base and the two numbers that are to be added.
 Examples
@@ -86,7 +89,8 @@ example:
   text contains the string "2E"
 Note:
 
-Your toDecimal() and fromDecimal() functions must not use any C library functions, but may use the provided functions digitChar() and digitValue(), described below.
+Your toDecimal() and fromDecimal() functions must not use any C library functions, but may use the provided functions digitChar() and digitValue(), 
+described below.
 
 char digitChar(int value, 
                int base)
