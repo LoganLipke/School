@@ -1,4 +1,5 @@
 #!/bin/bash
+clear
 ./lab2 10 2976 3845
 ./lab2 16 2CE 3FF
 ./lab2 24 H3 5g
