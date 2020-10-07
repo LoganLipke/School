@@ -1,10 +1,7 @@
 /*
  * Lab2.c
- * CSCI 247, Summer, 2017
- * 
- * main() written by David Bover, July, 2017
- * 
- * students get to complete the functions toDecimal() and fromDecimal()
+ * CISS 247, 2020
+ * Logan Lipke
  * 
  */
 
@@ -16,7 +13,7 @@
 
 #define DECIMAL     10
 #define MAX_BASE    36
-#define WIDTH       20      // width of the string used to store the result
+#define WIDTH       20     // width of the string used to store the result
 
 // function digitChar()
 // returns the character for the digit with value in base
@@ -92,7 +89,7 @@ int toDecimal(int base, char *number)
     int num = 0;
     for (int i = 0; i < numLen; i++)
     {
-        int revIndex = numLen-1-i; // This will get the index of the number going left to right. This is used as the exponent
+        int revIndex = numLen-1-i; // This will get the index of the number going right to left. This is used as the exponent
         int currentNum = digitValue(number[i], base);
         if (revIndex > 1)
         {
@@ -140,9 +137,8 @@ char *fromDecimal(int base, int decimal, char *number)
     // The rest of the numbers are found using modulus division and added to the number in reverse order
     number[0] = digitChar(results[i], base);
     for (int j = i; j > 0; j--)
-    {
         number[j] = digitChar(results[i-j] % base, base);
-    }
+    number[i+1] = '\0'; // Without adding this null terminator, longer values return memory garbage at the end of the string
     return number;
 }
 
@@ -176,7 +172,6 @@ int main(int count, char *word[]) {
     // convert the decimal result back to the base of the numbers
     char text[WIDTH];
     char *answer = fromDecimal(base, result, text);
-    
     // display the result
     printf("In base %d, %s + %s = %s\n", base, word[2], word[3], answer);
 
