@@ -30,7 +30,7 @@ char digitChar(int value, int base) {
     
     // check for valid range
     if (value < 0 || value >= base) {
-        printf("invalid digit value %d for base %d\n", value, base);
+        printf("digitChar: invalid digit value %d for base %d\n", value, base);
         exit(1);
     }
 
@@ -70,7 +70,7 @@ int digitValue(char digit, int base) {
     if (value < base) return value;
     
     // an invalid digit
-    printf("invalid digit %c for base %d\n", digit, base);
+    printf("digitValue: invalid digit %c for base %d\n", digit, base);
     exit(1);
     return value;
 }
@@ -86,7 +86,30 @@ int digitValue(char digit, int base) {
 // example:
 //      toDecimal(16, "2E") returns 46
 
-int toDecimal(int base, char *number);
+int toDecimal(int base, char *number)
+{
+    int numLen = strlen(number);
+    int num = 0;
+    for (int i = 0; i < numLen; i++)
+    {
+        int revIndex = numLen-1-i; // This will get the index of the number going left to right. This is used as the exponent
+        int currentNum = digitValue(number[i], base);
+        if (revIndex > 1)
+        {
+            int exp = base;
+            // The exponent is applied to the base using a for loop and finally multiplied with the numbers to convert to that base for each position
+            for (int j = revIndex; j > 1; j--)
+                exp *= base;
+            num += currentNum * exp;
+        }
+        // If the numbers are in index 1 they are multiplied by the base, index 0 assigns the number as if multiplying by exp of 0
+        else if (revIndex == 1)
+            num += currentNum * base;
+        else
+            num += currentNum;
+    }
+    return num;
+}
 
 
 // function fromDecimal()
@@ -102,7 +125,26 @@ int toDecimal(int base, char *number);
 //      fromDecimal(16, 46, text);
 //      text contains the string "2E"
 
-char *fromDecimal(int base, int decimal, char *number);
+char *fromDecimal(int base, int decimal, char *number)
+{
+    int i = 0;
+    int results[WIDTH];
+    results[i] = decimal;
+    // This while loop will add values to an array to get the quotient of the decimal number and the base
+    while (results[i] >= base)
+    {
+        results[i+1] = results[i] / base;
+        i++;
+    }
+    // The lowest number that can be gotten from this division is assigned to the first number
+    // The rest of the numbers are found using modulus division and added to the number in reverse order
+    number[0] = digitChar(results[i], base);
+    for (int j = i; j > 0; j--)
+    {
+        number[j] = digitChar(results[i-j] % base, base);
+    }
+    return number;
+}
 
 // function main()
 // expects command-line arguments: base, number1, number2
