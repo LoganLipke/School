@@ -13,15 +13,14 @@ unsigned int get_n_bits (unsigned bits, int width, int index);
 unsigned int rotate_left3(unsigned bits);
 void shuffle_nibbles (unsigned *bits);
 void decode_28bits (unsigned cipher, char *plain, unsigned key1, unsigned key2);
-void char_convert(char *cleartext, int *count, unsigned bits);
+void char_convert(unsigned bits);
 
 int main (int argc, char *argv[])
 {
     char line[8];
     unsigned int bits;
     unsigned key1, key2;
-    int *count = 0;
-    char *cleartext;
+
     // Step 1 Convert to integer
     if (argc == 2)
         get_keys(argv[1], &key1, &key2);
@@ -47,8 +46,9 @@ int main (int argc, char *argv[])
         bits = rotate_left3(bits);
      
         // Convert septets to chars
-        char_convert(cleartext, count, bits);
+        char_convert(bits);
     }
+    puts("\n");
     return 0;
 }
 
@@ -126,27 +126,12 @@ void shuffle_nibbles (unsigned *bits)
     *bits = temp2;// >> 4;
 }
 
-void char_convert(char *cleartext, int *count, unsigned bits)
+void char_convert(unsigned bits)
 {
     char tempChar;
-    int spaceCount = 0;
-
     for (int i = 3; i >= 0; i--)
     {
-        // printf("%d\n", *count);
         tempChar = extract_bits(bits, i);
-        if (tempChar == 0x20 )
-            spaceCount++;
-        if (spaceCount > 2)
-        {
-            printf("Spaces: %d\n", spaceCount);
-            // cleartext[*count] = '\0';
-            tempChar = '\0';
-            printf("0x%x ", tempChar);
-            return;
-        }
-        // cleartext[*count] = tempChar;
-        printf("0x%x ", tempChar);
-        count += 1;
+        printf("%c", tempChar);
     }  
 }
