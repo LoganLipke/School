@@ -6,6 +6,7 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 void get_keys (char *twokeys, unsigned *key1, unsigned *key2);
 unsigned int get_n_bits (unsigned bits, int width, int index);	
@@ -31,26 +32,23 @@ int main (int argc, char *argv[])
     }
     while (fgets(line, 8, stdin))
     {
-        // printf("Keys: %x %x\n", key1, key2);
         sscanf(line, "%x", &bits);
-        // printf("Unmodified bits: %x\n", bits);
+
         // Step 2 XOR with key2
         bits ^= key2;
-        // printf("XORed w/ Key2: %x\n", bits);
+     
         // Step 3 Shuffle nibbles
         shuffle_nibbles(&bits);
-        // printf("Shuffled: %x\n", bits);
+     
         // Step 4 XOR with key1
         bits ^= key1;
-        // printf("XORed w/ Key1: %x\n", bits);
+     
         // Rotate each septet left 3
         bits = rotate_left3(bits);
-        // printf("Rotated: %x\n", bits);
+     
         // Convert septets to chars
-        char_convert(&cleartext, &count, bits);
+        char_convert(cleartext, count, bits);
     }
-
-    printf("%c\n", cleartext[0]);
     return 0;
 }
 
@@ -71,6 +69,28 @@ void get_keys (char *twokeys, unsigned *key1, unsigned *key2)
     *key2 = temp2;
 } 
 
+unsigned extract_bits(unsigned bits, int nibble_index)
+{
+    switch (nibble_index)
+    {
+    case 3:
+        return (bits & 0xfe00000) >> 21;
+        break;
+    case 2:
+        return (bits & 0x1fc000) >> 14;
+        break;
+    case 1:
+        return (bits & 0x3f80) >> 7;
+        break;
+    case 0:
+        return bits & 0x7f;
+        break;
+    default:
+        return 0;
+        break;
+    }
+}
+
 unsigned int rotate_left3(unsigned bits)
 {    
     // given a sequence of 7 bits, rotate 3 bits to the left
@@ -78,38 +98,15 @@ unsigned int rotate_left3(unsigned bits)
     unsigned bitHolder = 0;
     unsigned topBits = 0;
 
-    // Rotate nibble 3
-    bitHolder = ((bits & 0xfe00000) >> 21);
-    topBits = ((bitHolder | 0x80) & 0xf0) >> 4;
-    bitHolder &= 0x0f;
-    bitHolder <<= 4;
-    bitHolder = (bitHolder | ((topBits & 0x7) << 1)) >> 1;
-    rotBits |= bitHolder << 21;
-
-    // Rotate nibble 2
-    bitHolder = (bits & 0x1fc000) >> 14;
-    topBits = ((bitHolder | 0x80) & 0xf0) >> 4;
-    bitHolder &= 0x0f;
-    bitHolder <<= 4;
-    bitHolder = (bitHolder | ((topBits & 0x7) << 1)) >> 1;
-    rotBits |= bitHolder << 14;
-    
-    // Rotate nibble 1
-    bitHolder = ((bits & 0x3f80) >> 7);
-    topBits = ((bitHolder | 0x80) & 0xf0) >> 4;
-    bitHolder &= 0x0f;
-    bitHolder <<= 4;
-    bitHolder = (bitHolder | ((topBits & 0x7) << 1)) >> 1;
-    rotBits |= bitHolder << 7;
-
-    // Rotate nibble 0
-    bitHolder = ((bits & 0x7f));
-    topBits = ((bitHolder | 0x80) & 0xf0) >> 4;
-    bitHolder &= 0x0f;
-    bitHolder <<= 4;
-    bitHolder = (bitHolder | ((topBits & 0x7) << 1)) >> 1;
-    rotBits |= bitHolder;
-
+    for (int i = 3; i >= 0; i--)
+    {
+        bitHolder = extract_bits(bits, i);
+        topBits = ((bitHolder | 0x80) & 0xf0) >> 4;
+        bitHolder &= 0x0f;
+        bitHolder <<= 4;
+        bitHolder = (bitHolder | ((topBits & 0x7) << 1)) >> 1;
+        rotBits |= bitHolder << (7*i);
+    }
     return rotBits;
 }
 
@@ -134,55 +131,22 @@ void char_convert(char *cleartext, int *count, unsigned bits)
     char tempChar;
     int spaceCount = 0;
 
-    tempChar = (bits & 0xfe00000) >> 21;
-    if (tempChar == 0x20 )
-        spaceCount++;
-    if (spaceCount > 2)
+    for (int i = 3; i >= 0; i--)
     {
-        printf("Spaces: %d\n", spaceCount);
-        cleartext[*count] = '\0';
-        return;
-    }
-    cleartext[*count] = tempChar;
-    *count += 1;
-
-    tempChar = (bits & 0x1fc000) >> 14;
-    if (tempChar == 0x20 )
-        spaceCount++;
-    if (spaceCount > 2)
-    {
-        printf("%d\n", *count);
-        cleartext[*count] = '\0';
-        return;
-    }
-    cleartext[*count] = tempChar;
-    *count += 1;
-
-
-    tempChar = (bits & 0x3f80) >> 7;
-    if (tempChar == 0x20 )
-        spaceCount++;
-    if (spaceCount > 2)
-    {
-        printf("%d\n", *count);
-        cleartext[*count] = '\0';
-        return;
-    }
-    cleartext[*count] = tempChar;
-    *count += 1;
-    
-    tempChar = (bits & 0x7f);
-    if (tempChar == 0x20 )
-        spaceCount++;
-    if (spaceCount > 2)
-    {
-        printf("%d\n", *count);
-        cleartext[*count] = '\0';
-        return;
-    }
-    cleartext[*count] = tempChar;
-    *count += 1;
-    
-
-    // printf("Spaces: %d\n", spaceCount);
+        // printf("%d\n", *count);
+        tempChar = extract_bits(bits, i);
+        if (tempChar == 0x20 )
+            spaceCount++;
+        if (spaceCount > 2)
+        {
+            printf("Spaces: %d\n", spaceCount);
+            // cleartext[*count] = '\0';
+            tempChar = '\0';
+            printf("0x%x ", tempChar);
+            return;
+        }
+        // cleartext[*count] = tempChar;
+        printf("0x%x ", tempChar);
+        count += 1;
+    }  
 }
