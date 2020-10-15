@@ -42,10 +42,10 @@ int main (int argc, char *argv[])
         // Step 4 XOR with key1
         bits ^= key1;
      
-        // Rotate each septet left 3
+        // Step 5 Rotate each septet left 3
         bits = rotate_left3(bits);
      
-        // Convert septets to chars
+        // Step 6 Convert septets to chars
         char_convert(bits);
     }
     puts("\n");
