@@ -25,11 +25,6 @@ int main()
     printf("func4(0xFFFFFFFD) should return 0. Result = %x\n", func4(0xFFFFFFFD));
     printf("func4(0xAAAAAAAA) should return 1. Result = %x\n", func4(0xAAAAAAAA));
 
-    printf("func5(5,3) should return 56 (0x38). Result = %x\n", func5(5,3));
-
-    printf("func6(0x12345678, 1, 3) should return 0x56341278. Result = %x\n", func6(0x12345678, 1, 3));
-    printf("func6(0xDEADBEEF, 0, 2) should return 0xDEEFBEAD. Result = %x\n", func6(0xDEADBEEF, 0, 2));
-
     return 0;
 }
 
