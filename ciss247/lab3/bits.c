@@ -19,7 +19,7 @@ int main()
     printf("func1(10,21) should return %x. Result = %x \n", func1(10,21), 10 & 21);
 
     printf("func2(4,5) should return %x. Result = %x \n", func2(4,5), 4 ^ 5);
-    printf("func2(42,13) should return %x. Result = %x \n", func2(42,13), 42 ^ 13);
+    printf("func2(42,13) should return %x. Result = %x \n", func2(42,13),42 ^ 13);
 
     printf("func3(0x5) should return 0. Result = %x\n", func3(0x5));
     printf("func3(0x7) should return 1. Result = %x\n", func3(0x7));
@@ -47,7 +47,6 @@ int func3(int x)
     // Returns 1 if any odd-numbered bit in an integer is set to 1, and 0 otherwise
     int tempBits = ((x >> 24) & 0xaa) | ((x >> 16) & 0xaa) | ((x >> 8) & 0xaa) | (x & 0xaa);
     return ((tempBits >> 1) & 1) | ((tempBits >> 3) & 1) | ((tempBits >> 5) & 1) | ((tempBits >> 7) & 1);
-    return 0;
 }
 
 int func4(int x)
