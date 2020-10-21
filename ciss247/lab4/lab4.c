@@ -13,7 +13,7 @@ struct Operation
 {
     int memAddr;
     char op[10];
-    int dest;
+    char dest[10];
     char src1[10], src2[10];
 };
 
@@ -35,6 +35,7 @@ void STUR(struct Operation *op);
 int B(struct Operation *op);
 int CBZ(struct Operation *op);
 int convertReg(char *reg);
+int convertSrc(char *src1, char *src2);
 
 struct Memory memoryStorage[50];
 struct Operation opStorage[50];
@@ -50,7 +51,7 @@ int main(int argc, char* argv[])
     for (int i = 0; i < opCount; i++)
     {
         // printf("%p + %lu\n", &opStorage[i], sizeof(opStorage[i]));
-        printf("%d %s %d %s %s", opStorage[i].memAddr, opStorage[i].op, opStorage[i].dest, opStorage[i].src1, opStorage[i].src2);
+        printf("%d %s %s, %s, %s", opStorage[i].memAddr, opStorage[i].op, opStorage[i].dest, opStorage[i].src1, opStorage[i].src2);
     }
 
     // printf("%d %s \n%s \n%s \n%s\n", opStorage[1].memAddr, opStorage[1].op, opStorage[1].dest, opStorage[1].src1, opStorage[1].src2);
@@ -78,8 +79,7 @@ void parseFile(char* fileName, int *opCount, int *memCount, struct Operation opS
             // printf("%d %d %x %x %x %x\n", *opCount, memAddr, op, dest, src1, src2);
             opStorage[*opCount].memAddr = memAddr;
             strcpy(opStorage[*opCount].op, op);
-            printf("TEST %s %d\n", dest, convertReg(dest));
-            opStorage[*opCount].dest = convertReg(dest);
+            strcpy(opStorage[*opCount].dest, dest);
             strcpy(opStorage[*opCount].src1, src1);
             strcpy(opStorage[*opCount].src2, src2);
             *opCount += 1;
@@ -98,7 +98,7 @@ void parseFile(char* fileName, int *opCount, int *memCount, struct Operation opS
     fclose(fp);
 }
 
-int convertOp(char *reg) // TODO Change to convert ops to decimal values?
+int convertReg(char *reg)
 {   
     if (strcmp(reg, "X0") == 0)
         return X0;
@@ -128,37 +128,42 @@ int convertOp(char *reg) // TODO Change to convert ops to decimal values?
         return -1;
 }
 
-void ADD(struct Operation *op)
+int convertSrc(char *src1, char *src2)
 {
-
+    
 }
 
-void ADDI(struct Operation *op)
-{
+// void ADD(struct Operation *op)
+// {
 
-}
+// }
 
-void SUB(struct Operation *op)
-{
+// void ADDI(struct Operation *op)
+// {
 
-}
+// }
 
-void LDUR(struct Operation *op)
-{
+// void SUB(struct Operation *op)
+// {
 
-}
+// }
 
-void STUR(struct Operation *op)
-{
+// void LDUR(struct Operation *op)
+// {
 
-}
+// }
 
-int B(struct Operation *op)
-{
+// void STUR(struct Operation *op)
+// {
 
-}
+// }
 
-int CBZ(struct Operation *op)
-{
+// int B(struct Operation *op)
+// {
 
-}
+// }
+
+// int CBZ(struct Operation *op)
+// {
+
+// }
