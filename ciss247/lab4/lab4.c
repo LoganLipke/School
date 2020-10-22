@@ -8,38 +8,26 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX_ADDR 50
+#define NUM_FIELDS 5
+#define SIZE_FIELDS 10
 
-struct Operation
-{
-    int memAddr;
-    char op[10];
-    char dest[10];
-    char src1[10], src2[10];
-};
 
-struct Memory
-{
-    int memAddr;
-    int value1, value2, value3, value4;
-};
-
+char memory[MAX_ADDR][NUM_FIELDS][SIZE_FIELDS];
+int pc = 200;
 enum Registers{X0, X1, X2, X3, X4, X5, X6, X7, X8, X9, X10, XZR=0};
-int regArray[10];
+int regArray[11];
 
-void parseFile(char* fileName, int *opCount, int *memCount, struct Operation opStorage[50], struct Memory memoryStorage[50]);
-void ADD(struct Operation *op);
-void ADDI(struct Operation *op);
-void SUB(struct Operation *op);
-void LDUR(struct Operation *op);
-void STUR(struct Operation *op);
-int B(struct Operation *op);
-int CBZ(struct Operation *op);
+void parseFile(char* fileName, int *opCount, int *memCount, char memory[MAX_ADDR][NUM_FIELDS][SIZE_FIELDS]);
+// void ADD(struct Operation *op);
+// void ADDI(struct Operation *op);
+// void SUB(struct Operation *op);
+// void LDUR(struct Operation *op);
+// void STUR(struct Operation *op);
+// int B(struct Operation *op);
+// int CBZ(struct Operation *op);
 int convertReg(char *reg);
 int convertSrc(char *src1, char *src2);
-
-struct Memory memoryStorage[50];
-struct Operation opStorage[50];
-
 
 int main(int argc, char* argv[])
 {
@@ -47,53 +35,41 @@ int main(int argc, char* argv[])
     int opCount = 0;
     int memCount = 0;
 
-    parseFile(filename, &opCount, &memCount, opStorage, memoryStorage);
-    for (int i = 0; i < opCount; i++)
+    parseFile(filename, &opCount, &memCount, memory);
+    int i = memCount;
+    while (pc < (4*opCount)+200)
     {
-        // printf("%p + %lu\n", &opStorage[i], sizeof(opStorage[i]));
-        printf("%d %s %s, %s, %s", opStorage[i].memAddr, opStorage[i].op, opStorage[i].dest, opStorage[i].src1, opStorage[i].src2);
+        i = ((pc - 200) /4) + memCount;
+        printf("%d : %s %s, %s, %s\n", pc, memory[i][1], memory[i][2], memory[i][3], memory[i][4]);
+        pc += 4;
     }
 
-    // printf("%d %s \n%s \n%s \n%s\n", opStorage[1].memAddr, opStorage[1].op, opStorage[1].dest, opStorage[1].src1, opStorage[1].src2);
-    puts("\n");
-    for (int i = 0; i < memCount; i++)
-    {
-        printf("%d %d %d %d %d\n", memoryStorage[i].memAddr, memoryStorage[i].value1, memoryStorage[i].value2, memoryStorage[i].value3, memoryStorage[i].value4);
-    }
+    printf("Ops: %d Mem: %d\n", opCount, memCount);
     return 0;
 }
 
 
-void parseFile(char* fileName, int *opCount, int *memCount, struct Operation opStorage[50], struct Memory memoryStorage[50])
+void parseFile(char* fileName, int *opCount, int *memCount, char memory[MAX_ADDR][NUM_FIELDS][SIZE_FIELDS])
 {
     char buff[255];
     FILE *fp = fopen(fileName, "r");
     while (fgets(buff, 50, (FILE *)fp))
     {
-        int memAddr = 0;
-        char op[10];
-        char dest[10], src1[10], src2[10];
-        sscanf(buff, "%d %s %[^,], %[^,], %[^,]", &memAddr, op, dest, src1, src2);
-        if (memAddr >= 200)
-        {
-            // printf("%d %d %x %x %x %x\n", *opCount, memAddr, op, dest, src1, src2);
-            opStorage[*opCount].memAddr = memAddr;
-            strcpy(opStorage[*opCount].op, op);
-            strcpy(opStorage[*opCount].dest, dest);
-            strcpy(opStorage[*opCount].src1, src1);
-            strcpy(opStorage[*opCount].src2, src2);
-            *opCount += 1;
-        }
-        else
-        {
-            memoryStorage[*memCount].memAddr = memAddr;
-            memoryStorage[*memCount].value1 = atoi(op);
-            memoryStorage[*memCount].value2 = atoi(dest);
-            memoryStorage[*memCount].value3 = atoi(src1);
-            memoryStorage[*memCount].value4 = atoi(src2);
-            *memCount += 1;
-        }
+        char memAddr[8];
+        char op[8];
+        char dest[8], src1[8], src2[8];
+        sscanf(buff, "%s %s %[^,], %[^,], %s\n", memAddr, op, dest, src1, src2);
         
+        // convertSrc(src1, src2);
+        strcpy(memory[*opCount+*memCount][0], memAddr);
+        strcpy(memory[*opCount+*memCount][1], op);
+        strcpy(memory[*opCount+*memCount][2], dest);
+        strcpy(memory[*opCount+*memCount][3], src1);
+        strcpy(memory[*opCount+*memCount][4], src2);
+        if (atoi(memAddr) >= 200)
+            *opCount +=1;
+        else
+            *memCount += 1;
     }
     fclose(fp);
 }
@@ -128,10 +104,12 @@ int convertReg(char *reg)
         return -1;
 }
 
-int convertSrc(char *src1, char *src2)
-{
+// int convertSrc(char *src1, char *src2)
+// {
     
-}
+//     printf("TEST %s %s\n", src1, src2);
+//     sscanf(src1, "", );
+// }
 
 // void ADD(struct Operation *op)
 // {
