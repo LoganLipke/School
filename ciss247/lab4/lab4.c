@@ -12,7 +12,6 @@
 #define NUM_FIELDS 5
 #define SIZE_FIELDS 6
 
-
 char memory[MAX_LINES][NUM_FIELDS][SIZE_FIELDS];
 int pc = 200;
 enum Registers{XZR, X0, X1, X2, X3, X4, X5, X6, X7, X8, X9, X10};
@@ -38,7 +37,6 @@ int main(int argc, char* argv[])
     int memCount = 0;
     if (argc == 2)
         filename = argv[1];
-    
 
     parseFile(filename, &opCount, &memCount, memory);
     int i = memCount;
@@ -77,16 +75,10 @@ int main(int argc, char* argv[])
         printf("PC = %d, INSTRUCTION: %s %s, %s, %s\n", pc, memory[i][1], memory[i][2], memory[i][3], memory[i][4]);
         puts("Registers:");
         for (int i = 1; i < 12; i++)
-        {
             if (regArray[i] != 0)
                 printf("X%d = %d ", i-1, regArray[i]);
-        }
     puts("\n");
     }
-
-    puts("MEMORY: ");
-    for (int i = 0; i < memCount; i++)
-        printf("MEMADDR = %d, MEMORY: %s %s, %s, %s\n", i * 4 + 100, memory[i][1], memory[i][2], memory[i][3], memory[i][4]);
     return 0;
 }
 
@@ -190,7 +182,6 @@ void ADD(char * dest, char * src1, char * src2)
     int destIndex = convertReg(dest);
     int src1Index = convertReg(src1);
     int src2Index = convertReg(src2);
-
     regArray[destIndex] = regArray[src1Index] + regArray[src2Index];
 }
 
@@ -199,7 +190,6 @@ void ADDI(char * dest, char * src1, char * src2)
     int destIndex = convertReg(dest);
     int src1Index = convertReg(src1);
     int src2Index = convertIntermed(src2);
-
     regArray[destIndex] = regArray[src1Index] + src2Index;
 }
 
@@ -208,7 +198,6 @@ void SUB(char * dest, char * src1, char * src2)
     int destIndex = convertReg(dest);
     int src1Index = convertReg(src1);
     int src2Index = convertReg(src2);
-
     regArray[destIndex] = regArray[src1Index] - regArray[src2Index];
 }
 
@@ -228,20 +217,13 @@ void STUR(char * dest, char * src1, char * src2)
     strcpy(memory[(srcIndex - 100) / 4][1], tmp);
 }
 
-void B(char * dest)
-{
-    pc = atoi(dest);
-}
+void B(char * dest) { pc = atoi(dest); }
 
 void CBZ(char * dest, char * src1)
 {
     int destIndex = convertReg(dest);
     if (regArray[destIndex] == 0)
-    {
         pc = atoi(src1);
-    }
     else
-    {
         pc += 4;
-    }
 }
