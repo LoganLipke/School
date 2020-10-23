@@ -49,18 +49,23 @@ int main(int argc, char* argv[])
         {
         case 1:
             ADD(memory[i][2], memory[i][3], memory[i][4]);
+            pc += 4;
             break;
         case 2:
             ADDI(memory[i][2], memory[i][3], memory[i][4]);
+            pc += 4;
             break;
         case 3:
             SUB(memory[i][2], memory[i][3], memory[i][4]);
+            pc += 4;
             break;
         case 4:
             LDUR(memory[i][2], memory[i][3], memory[i][4]);
+            pc += 4;
             break;
         case 5:
             STUR(memory[i][2], memory[i][3], memory[i][4]);
+            pc += 4;
             break;
         case 6:
             B(memory[i][2]);
@@ -69,17 +74,19 @@ int main(int argc, char* argv[])
             CBZ(memory[i][2], memory[i][3]);
             break;
         }
-        pc += 4;
         printf("PC = %d, INSTRUCTION: %s %s, %s, %s\n", pc, memory[i][1], memory[i][2], memory[i][3], memory[i][4]);
+        puts("Registers:");
+        for (int i = 1; i < 12; i++)
+        {
+            if (regArray[i] != 0)
+                printf("X%d = %d ", i-1, regArray[i]);
+        }
+    puts("\n");
     }
 
-    puts("Registers:");
-    for (int i = 1; i < 12; i++)
-    {
-        if (regArray[i] != 0)
-            printf("X%d = %d ", i-1, regArray[i]);
-    }
-    puts("\n");
+    puts("MEMORY: ");
+    for (int i = 0; i < memCount; i++)
+        printf("MEMADDR = %d, MEMORY: %s %s, %s, %s\n", i * 4 + 100, memory[i][1], memory[i][2], memory[i][3], memory[i][4]);
     return 0;
 }
 
@@ -217,7 +224,7 @@ void STUR(char * dest, char * src1, char * src2)
     int destIndex = convertReg(dest);
     int srcIndex = convertSrc(src1, src2);
     char tmp[SIZE_FIELDS];
-    scanf (tmp, "%d", regArray[destIndex]);
+    sprintf(tmp, "%d\n", regArray[destIndex]);
     strcpy(memory[(srcIndex - 100) / 4][1], tmp);
 }
 
@@ -230,5 +237,11 @@ void CBZ(char * dest, char * src1)
 {
     int destIndex = convertReg(dest);
     if (regArray[destIndex] == 0)
+    {
         pc = atoi(src1);
+    }
+    else
+    {
+        pc += 4;
+    }
 }
