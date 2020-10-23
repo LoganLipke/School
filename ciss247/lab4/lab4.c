@@ -24,8 +24,8 @@ void ADDI(char * dest, char * src1, char * src2);
 void SUB(char * dest, char * src1, char * src2);
 void LDUR(char * dest, char * src1, char * src2);
 void STUR(char * dest, char * src1, char * src2);
-void B(char * dest, char * src1, char * src2);
-void CBZ(char * dest, char * src1, char * src2);
+void B(char * dest);
+void CBZ(char * dest, char * src1);
 int convertReg(char *reg);
 int convertSrc(char *src1, char *src2);
 int convertIntermed(char *intermed);
@@ -36,14 +36,15 @@ int main(int argc, char* argv[])
     char *filename = "code.txt";
     int opCount = 0;
     int memCount = 0;
+    if (argc == 2)
+        filename = argv[1];
+    
 
     parseFile(filename, &opCount, &memCount, memory);
     int i = memCount;
     while (pc < (4*opCount)+200)
     {
-        i = ((pc - 200) /4) + memCount;
-        printf("%d : %s %s, %s, %s\n", pc, memory[i][1], memory[i][2], memory[i][3], memory[i][4]);
-        
+        i = ((pc - 200) /4) + memCount;        
         switch (convertOp(memory[i][1]))
         {
         case 1:
@@ -57,22 +58,28 @@ int main(int argc, char* argv[])
             break;
         case 4:
             LDUR(memory[i][2], memory[i][3], memory[i][4]);
-            convertSrc(memory[i][3], memory[i][4]);
             break;
         case 5:
             STUR(memory[i][2], memory[i][3], memory[i][4]);
             break;
         case 6:
-            B(memory[i][2], memory[i][3], memory[i][4]);
+            B(memory[i][2]);
             break;
         case 7:
-            CBZ(memory[i][2], memory[i][3], memory[i][4]);
+            CBZ(memory[i][2], memory[i][3]);
             break;
         }
         pc += 4;
+        printf("PC = %d, INSTRUCTION: %s %s, %s, %s\n", pc, memory[i][1], memory[i][2], memory[i][3], memory[i][4]);
     }
 
-    printf("Ops: %d Mem: %d\n", opCount, memCount);
+    puts("Registers:");
+    for (int i = 1; i < 12; i++)
+    {
+        if (regArray[i] != 0)
+            printf("X%d = %d ", i-1, regArray[i]);
+    }
+    puts("\n");
     return 0;
 }
 
@@ -134,10 +141,14 @@ int convertReg(char *reg)
 int convertSrc(char *src1, char *src2)
 {
     char tmp1[5], tmp2[5];
+    int tmpNum1 = 0;
+    int tmpNum2 = 0;
     sscanf(src1, "[%s", tmp1);
     sscanf(src2, "%[^]]", tmp2);
-
     
+    tmpNum1 = convertReg(tmp1);
+    tmpNum2 = convertIntermed(tmp2);
+    return regArray[tmpNum1] + tmpNum2;
 }
 
 int convertIntermed(char *intermed)
@@ -149,7 +160,7 @@ int convertIntermed(char *intermed)
 
 int convertOp(char *op)
 {
-        if (strcmp(op, "ADD") == 0)
+    if (strcmp(op, "ADD") == 0)
         return 1;
     else if (strcmp(op, "ADDI") == 0)
         return 2;
@@ -163,39 +174,61 @@ int convertOp(char *op)
         return 6;
     else if (strcmp(op, "CBZ") == 0)
         return 7;
+    else
+        return -1;
 }
 
 void ADD(char * dest, char * src1, char * src2)
 {
-    return;
+    int destIndex = convertReg(dest);
+    int src1Index = convertReg(src1);
+    int src2Index = convertReg(src2);
+
+    regArray[destIndex] = regArray[src1Index] + regArray[src2Index];
 }
 
 void ADDI(char * dest, char * src1, char * src2)
 {
-    return;
+    int destIndex = convertReg(dest);
+    int src1Index = convertReg(src1);
+    int src2Index = convertIntermed(src2);
+
+    regArray[destIndex] = regArray[src1Index] + src2Index;
 }
 
 void SUB(char * dest, char * src1, char * src2)
 {
-    return;
+    int destIndex = convertReg(dest);
+    int src1Index = convertReg(src1);
+    int src2Index = convertReg(src2);
+
+    regArray[destIndex] = regArray[src1Index] - regArray[src2Index];
 }
 
 void LDUR(char * dest, char * src1, char * src2)
 {
-    return;
+    int destIndex = convertReg(dest);
+    int srcIndex = convertSrc(src1, src2);
+    regArray[destIndex] = atoi(memory[(srcIndex - 100) / 4][1]);
 }
 
 void STUR(char * dest, char * src1, char * src2)
 {
-    return;
+    int destIndex = convertReg(dest);
+    int srcIndex = convertSrc(src1, src2);
+    char tmp[SIZE_FIELDS];
+    scanf (tmp, "%d", regArray[destIndex]);
+    strcpy(memory[(srcIndex - 100) / 4][1], tmp);
 }
 
-void B(char * dest, char * src1, char * src2)
+void B(char * dest)
 {
-    return;
+    pc = atoi(dest);
 }
 
-void CBZ(char * dest, char * src1, char * src2)
+void CBZ(char * dest, char * src1)
 {
-    return;
+    int destIndex = convertReg(dest);
+    if (regArray[destIndex] == 0)
+        pc = atoi(src1);
 }
