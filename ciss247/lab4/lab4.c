@@ -14,10 +14,10 @@
 
 char memory[MAX_LINES][NUM_FIELDS][SIZE_FIELDS];
 int pc = 200;
-enum Registers{X0, X1, X2, X3, X4, X5, X6, X7, X8, X9, X10, XZR};
-int regArray[12];
+int regArray[33];
+char *ptr;
 
-void parseFile(char* fileName, int *opCount, int *memCount, char memory[MAX_LINES][NUM_FIELDS][SIZE_FIELDS]);
+void parseFile(char* fileName, int *opCount, int *memCount);
 void ADD(char * dest, char * src1, char * src2);
 void ADDI(char * dest, char * src1, char * src2);
 void SUB(char * dest, char * src1, char * src2);
@@ -27,19 +27,20 @@ void B(char * dest);
 void CBZ(char * dest, char * src1);
 int convertSrc(char *src1, char *src2);
 int convertIntermed(char *intermed);
-int convertOp(char *op);
+int convertReg(char *reg);
 
 int main(int argc, char* argv[])
 {
+    regArray[32] = 0;
     char *filename = "code.txt";
     int opCount = 0;
     int memCount = 0;
     if (argc == 2)
         filename = argv[1];
 
-    parseFile(filename, &opCount, &memCount, memory);
+    parseFile(filename, &opCount, &memCount);
     int i = memCount;
-    while (pc < (4*opCount)+200)
+    while (pc < (4 * opCount) + 200)
     {
         i = ((pc - 200) /4) + memCount;
         if (strcmp(memory[i][1], "ADD") == 0)
@@ -71,19 +72,21 @@ int main(int argc, char* argv[])
             B(memory[i][2]);
         else if (strcmp(memory[i][1], "CBZ") == 0)
             CBZ(memory[i][2], memory[i][3]);
-
+        
         printf("PC = %d, INSTRUCTION: %s %s, %s, %s\n", pc, memory[i][1], memory[i][2], memory[i][3], memory[i][4]);
         puts("Registers:");
-        for (int i = 1; i < 12; i++)
+        for (int i = 0; i < 32; i++)
             if (regArray[i] != 0)
-                printf("X%d = %d ", i-1, regArray[i]);
+                printf("X%d = %d ", i, regArray[i]);
     puts("\n");
+    // printf("Press key");
+    // getchar();
     }
+
     return 0;
 }
 
-
-void parseFile(char* fileName, int *opCount, int *memCount, char memory[MAX_LINES][NUM_FIELDS][SIZE_FIELDS])
+void parseFile(char* fileName, int *opCount, int *memCount)
 {
     char buff[255];
     FILE *fp = fopen(fileName, "r");
@@ -99,8 +102,9 @@ void parseFile(char* fileName, int *opCount, int *memCount, char memory[MAX_LINE
         strcpy(memory[*opCount+*memCount][2], dest);
         strcpy(memory[*opCount+*memCount][3], src1);
         strcpy(memory[*opCount+*memCount][4], src2);
-        if (atoi(memAddr) >= 200)
-            *opCount +=1;
+        
+        if (strtol(memAddr, &ptr, 10) >= 200)
+            *opCount += 1;
         else
             *memCount += 1;
     }
@@ -109,32 +113,12 @@ void parseFile(char* fileName, int *opCount, int *memCount, char memory[MAX_LINE
 
 int convertReg(char *reg)
 {   
-    if (strcmp(reg, "X0") == 0)
-        return X0;
-    else if (strcmp(reg, "X1") == 0)
-        return X1;
-    else if (strcmp(reg, "X2") == 0)
-        return X2;
-    else if (strcmp(reg, "X3") == 0)
-        return X3;
-    else if (strcmp(reg, "X4") == 0)
-        return X4;
-    else if (strcmp(reg, "X5") == 0)
-        return X5;
-    else if (strcmp(reg, "X6") == 0)
-        return X6;
-    else if (strcmp(reg, "X7") == 0)
-        return X7;
-    else if (strcmp(reg, "X8") == 0)
-        return X8;
-    else if (strcmp(reg, "X9") == 0)
-        return X9;
-    else if (strcmp(reg, "X10") == 0)
-        return X10;
-    else if (strcmp(reg, "XZR") == 0)
-        return XZR;
+    char tmp[5];
+    if (reg[1] == 'Z')
+        return 32;
     else
-        return -1;
+        sscanf(reg, "X%s", tmp);
+    return strtol(tmp, &ptr, 10);
 }
 
 int convertSrc(char *src1, char *src2)
@@ -152,9 +136,9 @@ int convertSrc(char *src1, char *src2)
 
 int convertIntermed(char *intermed)
 {
-    char temp[5];
-    sscanf(intermed, "#%s", temp);
-    return atoi(temp);
+    char tmp[5];
+    sscanf(intermed, "#%s", tmp);
+    return strtol(tmp, &ptr, 10);
 }
 
 void ADD(char * dest, char * src1, char * src2)
@@ -162,6 +146,7 @@ void ADD(char * dest, char * src1, char * src2)
     int destIndex = convertReg(dest);
     int src1Index = convertReg(src1);
     int src2Index = convertReg(src2);
+    // printf("%d + %d = %d \n", regArray[src1Index], regArray[src2Index], regArray[src1Index] + regArray[src2Index]);
     regArray[destIndex] = regArray[src1Index] + regArray[src2Index];
 }
 
@@ -170,6 +155,7 @@ void ADDI(char * dest, char * src1, char * src2)
     int destIndex = convertReg(dest);
     int src1Index = convertReg(src1);
     int src2Index = convertIntermed(src2);
+    // printf("%d + %d = %d \n", regArray[src1Index], src2Index, regArray[src1Index] + src2Index);
     regArray[destIndex] = regArray[src1Index] + src2Index;
 }
 
@@ -178,6 +164,7 @@ void SUB(char * dest, char * src1, char * src2)
     int destIndex = convertReg(dest);
     int src1Index = convertReg(src1);
     int src2Index = convertReg(src2);
+    // printf("%d - %d = %d \n", regArray[src1Index], regArray[src2Index], regArray[src1Index] - regArray[src2Index]);
     regArray[destIndex] = regArray[src1Index] - regArray[src2Index];
 }
 
@@ -185,7 +172,8 @@ void LDUR(char * dest, char * src1, char * src2)
 {
     int destIndex = convertReg(dest);
     int srcIndex = convertSrc(src1, src2);
-    regArray[destIndex] = atoi(memory[(srcIndex - 100) / 4][1]);
+    // printf("Setting %s to %ld\n", dest, strtol(memory[(srcIndex - 100) / 4][1], &ptr, 10));
+    regArray[destIndex] = strtol(memory[(srcIndex - 100) / 4][1], &ptr, 10);
 }
 
 void STUR(char * dest, char * src1, char * src2)
@@ -194,16 +182,22 @@ void STUR(char * dest, char * src1, char * src2)
     int srcIndex = convertSrc(src1, src2);
     char tmp[SIZE_FIELDS];
     sprintf(tmp, "%d\n", regArray[destIndex]);
+    // printf("Setting %s to %s\n", memory[(srcIndex - 100) / 4][1], tmp);
     strcpy(memory[(srcIndex - 100) / 4][1], tmp);
 }
 
-void B(char * dest) { pc = atoi(dest); }
+void B(char * dest) 
+{
+    pc = strtol(dest, &ptr, 10);
+    // printf("Branching to %d\n", pc);   
+}
 
 void CBZ(char * dest, char * src1)
 {
     int destIndex = convertReg(dest);
     if (regArray[destIndex] == 0)
-        pc = atoi(src1);
+        pc = strtol(src1, &ptr, 10);
     else
         pc += 4;
+    // printf("Branching to %d\n", pc);
 }
