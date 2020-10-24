@@ -1,0 +1,64 @@
+PC = 204, INSTRUCTION: ADDI X0, X0, #16
+Registers:
+X0 = 16 
+
+PC = 208, INSTRUCTION: LDUR X1, [X3, #100]
+Registers:
+X0 = 16 X1 = 32 
+
+PC = 212, INSTRUCTION: ADD X3, X0, X1
+Registers:
+X0 = 16 X1 = 32 X3 = 48 
+
+PC = 216, INSTRUCTION: SUB X3, X3, X0
+Registers:
+X0 = 16 X1 = 32 X3 = 32 
+
+PC = 220, INSTRUCTION: CBZ X3, 224, 0
+Registers:
+X0 = 16 X1 = 32 X3 = 32 
+
+PC = 212, INSTRUCTION: B 212, 0, 0
+Registers:
+X0 = 16 X1 = 32 X3 = 32 
+
+PC = 216, INSTRUCTION: SUB X3, X3, X0
+Registers:
+X0 = 16 X1 = 32 X3 = 16 
+
+PC = 220, INSTRUCTION: CBZ X3, 224, 0
+Registers:
+X0 = 16 X1 = 32 X3 = 16 
+
+PC = 212, INSTRUCTION: B 212, 0, 0
+Registers:
+X0 = 16 X1 = 32 X3 = 16 
+
+PC = 216, INSTRUCTION: SUB X3, X3, X0
+Registers:
+X0 = 16 X1 = 32 
+
+PC = 224, INSTRUCTION: CBZ X3, 224, 0
+Registers:
+X0 = 16 X1 = 32 
+
+PC = 228, INSTRUCTION: STUR X0, [X2, #104]
+Registers:
+X0 = 16 X1 = 32 
+
+PC = 232, INSTRUCTION: LDUR X4, [X4, #104]
+Registers:
+X0 = 16 X1 = 32 X4 = 16 
+
+PC = 236, INSTRUCTION: ADD X4, X1, X3
+Registers:
+X0 = 16 X1 = 32 X4 = 32 
+
+PC = 240, INSTRUCTION: SUB X4, X2, X4
+Registers:
+X0 = 16 X1 = 32 X4 = -32 
+
+PC = 244, INSTRUCTION: ADD X1, X3, X4
+Registers:
+X0 = 16 X1 = -32 X4 = -32 
+
