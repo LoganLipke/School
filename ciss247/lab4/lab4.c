@@ -14,7 +14,7 @@
 
 char memory[MAX_LINES][NUM_FIELDS][SIZE_FIELDS];
 int pc = 200;
-enum Registers{XZR, X0, X1, X2, X3, X4, X5, X6, X7, X8, X9, X10};
+enum Registers{X0, X1, X2, X3, X4, X5, X6, X7, X8, X9, X10, XZR};
 int regArray[12];
 
 void parseFile(char* fileName, int *opCount, int *memCount, char memory[MAX_LINES][NUM_FIELDS][SIZE_FIELDS]);
@@ -25,7 +25,6 @@ void LDUR(char * dest, char * src1, char * src2);
 void STUR(char * dest, char * src1, char * src2);
 void B(char * dest);
 void CBZ(char * dest, char * src1);
-int convertReg(char *reg);
 int convertSrc(char *src1, char *src2);
 int convertIntermed(char *intermed);
 int convertOp(char *op);
@@ -42,36 +41,37 @@ int main(int argc, char* argv[])
     int i = memCount;
     while (pc < (4*opCount)+200)
     {
-        i = ((pc - 200) /4) + memCount;        
-        switch (convertOp(memory[i][1]))
+        i = ((pc - 200) /4) + memCount;
+        if (strcmp(memory[i][1], "ADD") == 0)
         {
-        case 1:
             ADD(memory[i][2], memory[i][3], memory[i][4]);
             pc += 4;
-            break;
-        case 2:
+        }
+        else if (strcmp(memory[i][1], "ADDI") == 0)
+        {
             ADDI(memory[i][2], memory[i][3], memory[i][4]);
             pc += 4;
-            break;
-        case 3:
+        }
+        else if (strcmp(memory[i][1], "SUB") == 0)
+        {
             SUB(memory[i][2], memory[i][3], memory[i][4]);
             pc += 4;
-            break;
-        case 4:
+        }
+        else if (strcmp(memory[i][1], "LDUR") == 0)
+        {
             LDUR(memory[i][2], memory[i][3], memory[i][4]);
             pc += 4;
-            break;
-        case 5:
+        }
+        else if (strcmp(memory[i][1], "STUR") == 0)
+        {
             STUR(memory[i][2], memory[i][3], memory[i][4]);
             pc += 4;
-            break;
-        case 6:
-            B(memory[i][2]);
-            break;
-        case 7:
-            CBZ(memory[i][2], memory[i][3]);
-            break;
         }
+        else if (strcmp(memory[i][1], "B") == 0)
+            B(memory[i][2]);
+        else if (strcmp(memory[i][1], "CBZ") == 0)
+            CBZ(memory[i][2], memory[i][3]);
+
         printf("PC = %d, INSTRUCTION: %s %s, %s, %s\n", pc, memory[i][1], memory[i][2], memory[i][3], memory[i][4]);
         puts("Registers:");
         for (int i = 1; i < 12; i++)
@@ -155,26 +155,6 @@ int convertIntermed(char *intermed)
     char temp[5];
     sscanf(intermed, "#%s", temp);
     return atoi(temp);
-}
-
-int convertOp(char *op)
-{
-    if (strcmp(op, "ADD") == 0)
-        return 1;
-    else if (strcmp(op, "ADDI") == 0)
-        return 2;
-    else if (strcmp(op, "SUB") == 0)
-        return 3;
-    else if (strcmp(op, "LDUR") == 0)
-        return 4;
-    else if (strcmp(op, "STUR") == 0)
-        return 5;
-    else if (strcmp(op, "B") == 0)
-        return 6;
-    else if (strcmp(op, "CBZ") == 0)
-        return 7;
-    else
-        return -1;
 }
 
 void ADD(char * dest, char * src1, char * src2)
