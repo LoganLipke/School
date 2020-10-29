@@ -37,7 +37,7 @@ int convertReg(char *reg);
 int main(int argc, char* argv[])
 {
     regArray[31] = 0;
-    regArray[28] = (MAX_LINES+STACK_SIZE-1);
+    regArray[28] = (MAX_LINES+STACK_SIZE-1) * 8;
     char *filename = "code.txt";
     int opCount = 0;
     int memCount = 0;
@@ -87,27 +87,33 @@ int main(int argc, char* argv[])
             BL(memory[i][2]);
         else if (strcmp(memory[i][1], "CBZ") == 0)
             CBZ(memory[i][2], memory[i][3]);
-        
+
         printf("INSTRUCTION: %s %s, %s, %s\n", memory[i][1], memory[i][2], memory[i][3], memory[i][4]);
         puts("Registers:");
         for (int i = 0; i < 32; i++)
             if (i == 28)
-                printf("SP = %d ", regArray[i]*8);
+                printf("SP = %d ", regArray[i]);
             else if (regArray[i] != 0)
                 printf("X%d = %d ", i, regArray[i]);
 
         printf("PC = %d\n", pc);
         
-        printf("Stack:");
-        for (int i = MAX_LINES+STACK_SIZE-1; i >= regArray[28]; i--)
+        if (regArray[28]/8 < MAX_LINES|| regArray[28]/8 > MAX_LINES+STACK_SIZE)
+        {
+            puts("\nRan out of Stack Space/Stack Overflow\n");
+            exit(1);
+        }
+
+        printf("Stack:\n");
+        for (int i = MAX_LINES+STACK_SIZE-1; i >= regArray[28]/8; i--)
             if (memory[i][0] != NULL)
                 printf("%d : %s\n", i*8, memory[i][1]);
         
-    puts("\n");
-    printf("Hit enter for next instruction");
-    getchar();
+        printf("Hit enter for next instruction");
+        getchar();
     }
-
+    // for (int i=0; i < MAX_LINES+STACK_SIZE; i++)
+    //     printf("%d : %s %s, %s, %s\n", i, memory[i][1], memory[i][2], memory[i][3], memory[i][4]);
     return 0;
 }
 
@@ -157,10 +163,13 @@ int convertSrc(char *src1, char *src2)
     int tmpNum2 = 0;
     sscanf(src1, "[%s", tmp1);
     sscanf(src2, "%[^]]", tmp2);
-    
+
     tmpNum1 = convertReg(tmp1);
     tmpNum2 = convertIntermed(tmp2);
-    return regArray[tmpNum1] + tmpNum2;
+    if (tmpNum1 == 28)
+        return regArray[tmpNum1] / 8 + tmpNum2;
+    else
+        return regArray[tmpNum1] + tmpNum2;
 }
 
 int convertIntermed(char *intermed)
@@ -220,8 +229,11 @@ void STUR(char * dest, char * src1, char * src2)
     int srcIndex = convertSrc(src1, src2);
     char tmp[SIZE_FIELDS];
     sprintf(tmp, "%d\n", regArray[destIndex]);
-    // printf("Setting %s to %s\n", memory[(srcIndex - 100) / 4][1], tmp);
-    strcpy(memory[(srcIndex - 100) / 4][1], tmp);
+    
+    if (strcmp(src1, "[SP") != 0)
+        strcpy(memory[(srcIndex - 100) / 4][1], tmp);
+    else
+        strcpy(memory[srcIndex][1], tmp);
 }
 
 void B(char * dest) 
@@ -239,7 +251,7 @@ void BR(char * dest)
 
 void BL(char * dest) 
 {
-    regArray[convertReg("LR")] = pc;
+    regArray[convertReg("LR")] = pc+4;
     pc = strtol(dest, &ptr, 10);
     // printf("Branching to %d\n", pc);   
 }
