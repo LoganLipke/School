@@ -1,0 +1,688 @@
+INSTRUCTION: ADDI X3, XZR, #100
+Registers:
+X3 = 100 SP = 1192 LR = 0 PC = 204
+Stack:
+1192 : 
+INSTRUCTION: LDUR X1, [X3, #0]
+Registers:
+X1 = 256 X3 = 100 SP = 1192 LR = 0 PC = 208
+Stack:
+1192 : 
+INSTRUCTION: LDUR X2, [X3, #8]
+Registers:
+X1 = 256 X2 = 16 X3 = 100 SP = 1192 LR = 0 PC = 212
+Stack:
+1192 : 
+INSTRUCTION: SUBI SP, SP, #16
+Registers:
+X1 = 256 X2 = 16 X3 = 100 SP = 1176 LR = 0 PC = 216
+Stack:
+1192 : 
+1184 : 
+1176 : 
+INSTRUCTION: STUR X2, [SP, #8]
+Registers:
+X1 = 256 X2 = 16 X3 = 100 SP = 1176 LR = 0 PC = 220
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 
+INSTRUCTION: STUR X1, [SP, #0]
+Registers:
+X1 = 256 X2 = 16 X3 = 100 SP = 1176 LR = 0 PC = 224
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: BL 248
+, [SP, #0]
+Registers:
+X1 = 256 X2 = 16 X3 = 100 SP = 1176 LR = 228 PC = 248
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: ADD X1, XZR, XZR
+Registers:
+X2 = 16 X3 = 100 SP = 1176 LR = 228 PC = 252
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: LDUR X2, [SP, #0]
+Registers:
+X2 = 256 X3 = 100 SP = 1176 LR = 228 PC = 256
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: LDUR X3, [SP, #8]
+Registers:
+X2 = 256 X3 = 16 SP = 1176 LR = 228 PC = 260
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: SUB X2, X2, X3
+Registers:
+X2 = 240 X3 = 16 SP = 1176 LR = 228 PC = 264
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: ADDI X1, X1, #1
+Registers:
+X1 = 1 X2 = 240 X3 = 16 SP = 1176 LR = 228 PC = 268
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: CBZ X2, 276, 0
+Registers:
+X1 = 1 X2 = 240 X3 = 16 SP = 1176 LR = 228 PC = 272
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: B 260, 0, 0
+Registers:
+X1 = 1 X2 = 240 X3 = 16 SP = 1176 LR = 228 PC = 260
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: SUB X2, X2, X3
+Registers:
+X1 = 1 X2 = 224 X3 = 16 SP = 1176 LR = 228 PC = 264
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: ADDI X1, X1, #1
+Registers:
+X1 = 2 X2 = 224 X3 = 16 SP = 1176 LR = 228 PC = 268
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: CBZ X2, 276, 0
+Registers:
+X1 = 2 X2 = 224 X3 = 16 SP = 1176 LR = 228 PC = 272
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: B 260, 0, 0
+Registers:
+X1 = 2 X2 = 224 X3 = 16 SP = 1176 LR = 228 PC = 260
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: SUB X2, X2, X3
+Registers:
+X1 = 2 X2 = 208 X3 = 16 SP = 1176 LR = 228 PC = 264
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: ADDI X1, X1, #1
+Registers:
+X1 = 3 X2 = 208 X3 = 16 SP = 1176 LR = 228 PC = 268
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: CBZ X2, 276, 0
+Registers:
+X1 = 3 X2 = 208 X3 = 16 SP = 1176 LR = 228 PC = 272
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: B 260, 0, 0
+Registers:
+X1 = 3 X2 = 208 X3 = 16 SP = 1176 LR = 228 PC = 260
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: SUB X2, X2, X3
+Registers:
+X1 = 3 X2 = 192 X3 = 16 SP = 1176 LR = 228 PC = 264
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: ADDI X1, X1, #1
+Registers:
+X1 = 4 X2 = 192 X3 = 16 SP = 1176 LR = 228 PC = 268
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: CBZ X2, 276, 0
+Registers:
+X1 = 4 X2 = 192 X3 = 16 SP = 1176 LR = 228 PC = 272
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: B 260, 0, 0
+Registers:
+X1 = 4 X2 = 192 X3 = 16 SP = 1176 LR = 228 PC = 260
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: SUB X2, X2, X3
+Registers:
+X1 = 4 X2 = 176 X3 = 16 SP = 1176 LR = 228 PC = 264
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: ADDI X1, X1, #1
+Registers:
+X1 = 5 X2 = 176 X3 = 16 SP = 1176 LR = 228 PC = 268
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: CBZ X2, 276, 0
+Registers:
+X1 = 5 X2 = 176 X3 = 16 SP = 1176 LR = 228 PC = 272
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: B 260, 0, 0
+Registers:
+X1 = 5 X2 = 176 X3 = 16 SP = 1176 LR = 228 PC = 260
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: SUB X2, X2, X3
+Registers:
+X1 = 5 X2 = 160 X3 = 16 SP = 1176 LR = 228 PC = 264
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: ADDI X1, X1, #1
+Registers:
+X1 = 6 X2 = 160 X3 = 16 SP = 1176 LR = 228 PC = 268
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: CBZ X2, 276, 0
+Registers:
+X1 = 6 X2 = 160 X3 = 16 SP = 1176 LR = 228 PC = 272
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: B 260, 0, 0
+Registers:
+X1 = 6 X2 = 160 X3 = 16 SP = 1176 LR = 228 PC = 260
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: SUB X2, X2, X3
+Registers:
+X1 = 6 X2 = 144 X3 = 16 SP = 1176 LR = 228 PC = 264
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: ADDI X1, X1, #1
+Registers:
+X1 = 7 X2 = 144 X3 = 16 SP = 1176 LR = 228 PC = 268
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: CBZ X2, 276, 0
+Registers:
+X1 = 7 X2 = 144 X3 = 16 SP = 1176 LR = 228 PC = 272
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: B 260, 0, 0
+Registers:
+X1 = 7 X2 = 144 X3 = 16 SP = 1176 LR = 228 PC = 260
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: SUB X2, X2, X3
+Registers:
+X1 = 7 X2 = 128 X3 = 16 SP = 1176 LR = 228 PC = 264
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: ADDI X1, X1, #1
+Registers:
+X1 = 8 X2 = 128 X3 = 16 SP = 1176 LR = 228 PC = 268
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: CBZ X2, 276, 0
+Registers:
+X1 = 8 X2 = 128 X3 = 16 SP = 1176 LR = 228 PC = 272
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: B 260, 0, 0
+Registers:
+X1 = 8 X2 = 128 X3 = 16 SP = 1176 LR = 228 PC = 260
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: SUB X2, X2, X3
+Registers:
+X1 = 8 X2 = 112 X3 = 16 SP = 1176 LR = 228 PC = 264
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: ADDI X1, X1, #1
+Registers:
+X1 = 9 X2 = 112 X3 = 16 SP = 1176 LR = 228 PC = 268
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: CBZ X2, 276, 0
+Registers:
+X1 = 9 X2 = 112 X3 = 16 SP = 1176 LR = 228 PC = 272
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: B 260, 0, 0
+Registers:
+X1 = 9 X2 = 112 X3 = 16 SP = 1176 LR = 228 PC = 260
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: SUB X2, X2, X3
+Registers:
+X1 = 9 X2 = 96 X3 = 16 SP = 1176 LR = 228 PC = 264
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: ADDI X1, X1, #1
+Registers:
+X1 = 10 X2 = 96 X3 = 16 SP = 1176 LR = 228 PC = 268
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: CBZ X2, 276, 0
+Registers:
+X1 = 10 X2 = 96 X3 = 16 SP = 1176 LR = 228 PC = 272
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: B 260, 0, 0
+Registers:
+X1 = 10 X2 = 96 X3 = 16 SP = 1176 LR = 228 PC = 260
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: SUB X2, X2, X3
+Registers:
+X1 = 10 X2 = 80 X3 = 16 SP = 1176 LR = 228 PC = 264
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: ADDI X1, X1, #1
+Registers:
+X1 = 11 X2 = 80 X3 = 16 SP = 1176 LR = 228 PC = 268
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: CBZ X2, 276, 0
+Registers:
+X1 = 11 X2 = 80 X3 = 16 SP = 1176 LR = 228 PC = 272
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: B 260, 0, 0
+Registers:
+X1 = 11 X2 = 80 X3 = 16 SP = 1176 LR = 228 PC = 260
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: SUB X2, X2, X3
+Registers:
+X1 = 11 X2 = 64 X3 = 16 SP = 1176 LR = 228 PC = 264
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: ADDI X1, X1, #1
+Registers:
+X1 = 12 X2 = 64 X3 = 16 SP = 1176 LR = 228 PC = 268
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: CBZ X2, 276, 0
+Registers:
+X1 = 12 X2 = 64 X3 = 16 SP = 1176 LR = 228 PC = 272
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: B 260, 0, 0
+Registers:
+X1 = 12 X2 = 64 X3 = 16 SP = 1176 LR = 228 PC = 260
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: SUB X2, X2, X3
+Registers:
+X1 = 12 X2 = 48 X3 = 16 SP = 1176 LR = 228 PC = 264
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: ADDI X1, X1, #1
+Registers:
+X1 = 13 X2 = 48 X3 = 16 SP = 1176 LR = 228 PC = 268
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: CBZ X2, 276, 0
+Registers:
+X1 = 13 X2 = 48 X3 = 16 SP = 1176 LR = 228 PC = 272
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: B 260, 0, 0
+Registers:
+X1 = 13 X2 = 48 X3 = 16 SP = 1176 LR = 228 PC = 260
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: SUB X2, X2, X3
+Registers:
+X1 = 13 X2 = 32 X3 = 16 SP = 1176 LR = 228 PC = 264
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: ADDI X1, X1, #1
+Registers:
+X1 = 14 X2 = 32 X3 = 16 SP = 1176 LR = 228 PC = 268
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: CBZ X2, 276, 0
+Registers:
+X1 = 14 X2 = 32 X3 = 16 SP = 1176 LR = 228 PC = 272
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: B 260, 0, 0
+Registers:
+X1 = 14 X2 = 32 X3 = 16 SP = 1176 LR = 228 PC = 260
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: SUB X2, X2, X3
+Registers:
+X1 = 14 X2 = 16 X3 = 16 SP = 1176 LR = 228 PC = 264
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: ADDI X1, X1, #1
+Registers:
+X1 = 15 X2 = 16 X3 = 16 SP = 1176 LR = 228 PC = 268
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: CBZ X2, 276, 0
+Registers:
+X1 = 15 X2 = 16 X3 = 16 SP = 1176 LR = 228 PC = 272
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: B 260, 0, 0
+Registers:
+X1 = 15 X2 = 16 X3 = 16 SP = 1176 LR = 228 PC = 260
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: SUB X2, X2, X3
+Registers:
+X1 = 15 X3 = 16 SP = 1176 LR = 228 PC = 264
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: ADDI X1, X1, #1
+Registers:
+X1 = 16 X3 = 16 SP = 1176 LR = 228 PC = 268
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: CBZ X2, 276, 0
+Registers:
+X1 = 16 X3 = 16 SP = 1176 LR = 228 PC = 276
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: BR LR, 0, 0
+Registers:
+X1 = 16 X3 = 16 SP = 1176 LR = 228 PC = 228
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: LDUR X2, [SP, #0]
+Registers:
+X1 = 16 X2 = 256 X3 = 16 SP = 1176 LR = 228 PC = 232
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: LDUR X3, [SP, #8]
+Registers:
+X1 = 16 X2 = 256 X3 = 16 SP = 1176 LR = 228 PC = 236
+Stack:
+1192 : 
+1184 : 16
+
+1176 : 256
+
+INSTRUCTION: ADDI SP, SP, #16
+Registers:
+X1 = 16 X2 = 256 X3 = 16 SP = 1192 LR = 228 PC = 240
+Stack:
+1192 : 
+INSTRUCTION: STUR X1, [SP, #0]
+Registers:
+X1 = 16 X2 = 256 X3 = 16 SP = 1192 LR = 228 PC = 244
+Stack:
+1192 : 16
+
+INSTRUCTION: BR XZR
+, [SP, #0]
+Registers:
+X1 = 16 X2 = 256 X3 = 16 SP = 1192 LR = 228 PC = 0
+Stack:
+1192 : 16
+
