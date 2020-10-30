@@ -93,6 +93,8 @@ int main(int argc, char* argv[])
         for (int i = 0; i < 32; i++)
             if (i == 28)
                 printf("SP = %d ", regArray[i]);
+            else if (i == 30)
+                printf("LR = %d ", regArray[i]);
             else if (regArray[i] != 0)
                 printf("X%d = %d ", i, regArray[i]);
 
@@ -109,8 +111,8 @@ int main(int argc, char* argv[])
             if (memory[i][0] != NULL)
                 printf("%d : %s\n", i*8, memory[i][1]);
         
-        printf("Hit enter for next instruction");
-        getchar();
+        // printf("Hit enter for next instruction");
+        // getchar();
     }
     // for (int i=0; i < MAX_LINES+STACK_SIZE; i++)
     //     printf("%d : %s %s, %s, %s\n", i, memory[i][1], memory[i][2], memory[i][3], memory[i][4]);
@@ -167,7 +169,7 @@ int convertSrc(char *src1, char *src2)
     tmpNum1 = convertReg(tmp1);
     tmpNum2 = convertIntermed(tmp2);
     if (tmpNum1 == 28)
-        return regArray[tmpNum1] / 8 + tmpNum2;
+        return (regArray[tmpNum1] + tmpNum2) / 8;
     else
         return regArray[tmpNum1] + tmpNum2;
 }
@@ -220,7 +222,10 @@ void LDUR(char * dest, char * src1, char * src2)
     int destIndex = convertReg(dest);
     int srcIndex = convertSrc(src1, src2);
     // printf("Setting %s to %ld\n", dest, strtol(memory[(srcIndex - 100) / 4][1], &ptr, 10));
-    regArray[destIndex] = strtol(memory[(srcIndex - 100) / 4][1], &ptr, 10);
+    if (strcmp(src1, "[SP") != 0)
+        regArray[destIndex] = strtol(memory[(srcIndex - 100) / 4][1], &ptr, 10);
+    else
+        regArray[destIndex] = strtol(memory[srcIndex][1], &ptr, 10);
 }
 
 void STUR(char * dest, char * src1, char * src2)
