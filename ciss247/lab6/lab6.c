@@ -19,7 +19,6 @@ int main(int argc, char *argv[]) {
 
 
 	float *f = (float*)&fbits;
-	// printf("fbits : %u\n", fbits);
 	printf("Before negate: %e\n", *f);
 	fbits = float_negate(&fbits);
 	f = (float*)&fbits;
@@ -52,9 +51,8 @@ int float_class(float_bits *f)
 	// p/m infinity = exp all 1, frac all 0
 	// NaN = exp all 1, frac not all 0
 	// leftmost fraction bit == 1; normalized else denormalized
-	printf("%d\n", ~(*f ^ (0xff << 23)));
-	printf("%d\n", *f & (1 << 22));
-	return (*f ^ (0xff << 23)) & (*f & (1 << 22));
+
+	return ((*f >> 23) ^ 0xff) + ~((*f >> 22 & 1 ));
 }
 
 float_bits float_negate(float_bits *f)
@@ -74,5 +72,5 @@ float_bits float_twice(float_bits *f)
 
 float_bits float_half(float_bits *f)
 {
-	return *f + ((~1 >> 1) << 23);	
+	return *f + (~1 << 22);	
 }
