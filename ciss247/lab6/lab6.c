@@ -51,7 +51,6 @@ int float_class(float_bits *f)
 	// p/m infinity = exp all 1, frac all 0
 	// NaN = exp all 1, frac not all 0
 	// leftmost fraction bit == 1; normalized else denormalized
-
 	return ((*f >> 23) ^ 0xff) + ~((*f >> 22 & 1 ));
 }
 
