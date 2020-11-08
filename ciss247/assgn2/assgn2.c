@@ -58,17 +58,17 @@ int main(int argc, char *argv[])
                 strcpy(closest, wordlist[j]);
             }
             
-            if ((wordCount < 5) && (strlen(word) == strlen(wordlist[j])) && (getHamming(word, wordlist[j]) < strlen(word)) && (strcmp(word, wordlist[j]) != 0))
+            if ((wordCount < 5) && (strlen(word) == strlen(wordlist[j])) && (getHamming(word, wordlist[j]) <= 4) && (strcmp(word, wordlist[j]) != 0))
             {   // Finds 5 alternatives to chosen word
                 if (wordCount == 0)
                     printf("Potential alternatives: \n");
                 wordCount++;
-                printf("Score: %d\t%s \n", getHamming(word, wordlist[j]), wordlist[j]);
+                printf("HD: %d\t%s \n", getHamming(word, wordlist[j]), wordlist[j]);
             }
         }
         for (int j = 0; j < i; j++)
         {
-            if ((subCount < 5) && (checkSubstring(word, wordlist[j])))
+            if ((subCount < 5) && (checkSubstring(closest, wordlist[j])))
             {
                 if (subCount == 0)
                     printf("\nWord found in: \n");
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
                 printf("\t%s \n", wordlist[j]);
             }
         }
-        printf("\nClosest word found : \nScore: %d\t%s\n", minHamming, closest);
+        printf("\nClosest word found : \nHD: %d\t%s\n", minHamming, closest);
         getWord(word);
     }
 }
