@@ -6,13 +6,7 @@
 
 int main()
 {
-    int v1 = 0x17;
-    int v2 = 0x13;
-    int v3 = 0xc;
-    int v4 = 0x2;
-    int v5 = 0x3;
-    int v6 = 0x1;
-    int total = 0;
-    total = (v1 * v4) + (v2 * v5) + (v3 * v6);
+    int test[7] = {0x17, 0x13, 0xc, 0x2, 0x3, 0x1, 0x0};
+    test[6] = (test[0] * test[3]) + (test[1] * test[4]) + (test[2] * test[5]);
     return 0;
 }
