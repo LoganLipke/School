@@ -36,7 +36,11 @@ int main(int argc, char *argv[])
             displayAllMid(argv[1], 0);
             displayAllBot(argv[1], 0);
         }
-        
+    }
+    else
+    {
+        printf("Number to print must be specified.");
+        exit(1);
     }
 }
 
@@ -50,9 +54,7 @@ void displayAllTop(char *numString, int negative)
         i++;
     }
     for (;i < strlen(numString); i++)
-    {
         displayCharTop(numString[i]);
-    }
     printf("\n");
 }
 
@@ -65,9 +67,7 @@ void displayAllBot(char *numString, int negative)
         i++;
     }
     for (;i < strlen(numString); i++)
-    {
         displayCharBot(numString[i]);
-    }
     printf("\n");
 }
 
@@ -80,9 +80,7 @@ void displayAllMid(char *numString, int negative)
         i++;
     }
     for (;i < strlen(numString); i++)
-    {
         displayCharMid(numString[i]);
-    }
     printf("\n");
 }   
 
