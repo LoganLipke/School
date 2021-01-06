@@ -7,6 +7,8 @@ def Fib(n):
         return 1
     elif n > 1:
         return Fib(n - 1) + Fib(n - 2)
+    else:
+        raise ValueError("Please choose a non-negative number")
 
 def Luc(n):
     if n == 0:
@@ -15,15 +17,31 @@ def Luc(n):
         return 1
     elif n > 1:
         return Luc(n - 1) + Luc(n - 2)
+    else:
+        raise ValueError("Please choose a non-negative number")
 
 def Pair(n):
     return Fib(n + 2) - Fib(n - 2)
 
 
 def main():
-    print("Fibonacci Sequence at 7 is ", Fib(7))
-    print("Lucas Sequence at 6 is ", Luc(6))
-    print("Pair Sequence at 6 is ", Pair(6))
+    for i in range(10):
+        print("=====================================================")
+        print("i =", i)
+        try:
+            print("\tFib =", Fib(i), end=" ")
+        except:
+            pass
+        try:
+            print("\tLuc =", Luc(i), end=" ")
+        except:
+            pass
+        try:
+            print("\tPair =", Pair(i), end=" ")
+        except:
+            pass
+        print("")
+        
 
 if __name__ == "__main__":
     main()
