@@ -1,0 +1,1 @@
+#4) The relationship between Luc and Pair is that after 2 they output the same thing. Before 2 Pair would be negative so the function fails.
