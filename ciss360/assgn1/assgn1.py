@@ -12,7 +12,7 @@ def parse_file(file="", timestamp="", user="", log_msg="", mode=4, print_results
     with open(file, 'r') as file: 
         lines = file.readlines()
 
-    log_reg= r"(\w+ \d+ \d+:\d+:\d+) (\S+) (.+)"
+    log_reg= r"(\w+ .\d \d+:\d+:\d+) (\S+) (.+)"
     reg = re.compile(log_reg)
     count_timestamp = 0
     count_user = 0
