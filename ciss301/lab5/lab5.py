@@ -16,7 +16,7 @@ class Graph:
             for edge_pair in edges:
                 if edge_pair[0] not in vertices:
                     vertices.append(edge_pair[0])
-                elif edge_pair[1] not in vertices:
+                if edge_pair[1] not in vertices:
                     vertices.append(edge_pair[1])
         for edge_pair in self.edges:
             for edge in edge_pair:
@@ -52,19 +52,14 @@ class Graph:
         return count == target
     
     def check_transitive(self):
-        target = 0
-        count = 0
+        transitive = True
         for v in self.vertices.values():
-            v.show_next_connections()
-            v.show_prev_connections()
             for n in v.next_vertice:
-                target += 1
-                for n2 in n.next_vertice:
-                    if v in n2.prev_vertice:
-                        count += 1
-
-        print(count, target)
-        return count == target
+                if len(n.next_vertice) > 0:
+                    for n2 in n.next_vertice:
+                        if v not in n2.prev_vertice:
+                            transitive = False
+        return transitive
 
 
 class Vertice:
@@ -123,6 +118,6 @@ def Transitive(L):
 def main():
     print(Reflexive([['a','a'],['b','a'],['b','b'], ['c','a'],['c','c']], ['a','b','c']))
     print(Symmetric([['a','b'],['b','a']]))
-    print(Transitive([['a','b'],['b','c'],['a','c']]))
+    print(Transitive([['a','b'], ['a','c'], ['b','c']]))
 if __name__ == "__main__":
     main()
