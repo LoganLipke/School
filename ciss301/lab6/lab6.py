@@ -32,9 +32,9 @@ def set_equal(set_a, set_b):
                     if set_subset(i, j):
                         return True
         else:
-            flag = True
             if i in set_b:
                 count += 1
+                flag = True
     if count == target and flag:
         return True
     else: 
@@ -54,6 +54,8 @@ def set_subset(sub_a, sub_b):
 def main():
     print(set_equal([1,[2,[3,4]]],[[[4,3],2],1]))
     print(set_equal([1,[2,[3,4]]],[[4,3,2],1]))
+    print(set_equal([1,[2,[3,[4]]]],[[[[4],3],2],1]))
+
     
     
 if __name__ == "__main__":
