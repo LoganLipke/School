@@ -34,13 +34,18 @@ def set_equal(set_a, set_b):
         else:
             if i in set_b:
                 count += 1
-                flag = True
+                if count == target:
+                    flag = True
     if count == target and flag:
         return True
-    else: 
+    else:
+        # print(set_a, set_b, count, target)
         return False
 
 def set_subset(sub_a, sub_b):
+    target = len(sub_b)
+    count = 0
+    flag = False
     for i in sub_a:
         if not isinstance(i, list) and i not in sub_b:
             return False
@@ -49,12 +54,22 @@ def set_subset(sub_a, sub_b):
                 if isinstance(j, list):
                     if set_equal(i, j):
                         return True
+        else:
+            if i in sub_b:
+                count += 1
+                if count == target:
+                    flag = True
+    if count == target and flag:
+        return True
+    else:
+        # print(set_a, set_b, count, target)
+        return False
 
 
 def main():
-    print(set_equal([1,[2,[3,4]]],[[[4,3],2],1]))
+    print(set_equal([1,[2,5,[3,4]]],[[[4,3],5,2],1]))
     print(set_equal([1,[2,[3,4]]],[[4,3,2],1]))
-    print(set_equal([1,[2,[3,[4]]]],[[[[4],3],2],1]))
+    print(set_equal([1,[2,5,[3,[4,6]]]],[[[[4,6],3],5,2],1]))
 
     
     
