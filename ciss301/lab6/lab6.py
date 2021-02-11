@@ -67,10 +67,11 @@ def set_subset(sub_a, sub_b):
 
 
 def main():
-    print(set_equal([1,[2,5,[3,4]]],[[[4,3],5,2],1]))
-    print(set_equal([1,[2,[3,4]]],[[4,3,2],1]))
-    print(set_equal([1,[2,5,[3,[4,6]]]],[[[[4,6],3],5,2],1]))
-
+    print(set_equal([1,[2,[3,4]]],[[[4,3],2],1]))                               # True
+    print(set_equal([1,[2,5,[3,[4,6]]]],[[[[4,6],3],5,2],1]))                   # True
+    print(set_equal([[7,8,9],1,[[5,6],2,[3,4]]],[[[4,3],[5,6],2],1,[7,8,9]]))   # True
+    print(set_equal([1,[2,[3,4]]],[[4,3,2],1]))                                 # False
+    print(set_equal([1,[2,[3,4]]],[[4,3],2,1]))                                 # False
     
     
 if __name__ == "__main__":
