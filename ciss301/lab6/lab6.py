@@ -21,7 +21,25 @@ def is_odd(n):
 def set_equal(set_a, set_b):
     target = len(set_b)
     count = 0
-    flag = False
+    for i in set_a:
+        if not isinstance(i, list) and i not in set_b:
+            return False
+        elif isinstance(i, list):
+            for j in set_b:
+                if isinstance(j, list):
+                    if set_subset(i, j):
+                        return True
+        else:
+            if i in set_b:
+                count += 1
+    if count == target:
+        return True
+    else:
+        return False
+
+def set_subset(set_a, set_b):
+    target = len(set_b)
+    count = 0
     for i in set_a:
         if not isinstance(i, list) and i not in set_b:
             return False
@@ -33,13 +51,10 @@ def set_equal(set_a, set_b):
         else:
             if i in set_b:
                 count += 1
-                if count == target:
-                    flag = True
-    if count == target and flag:
+    if count == target:
         return True
     else:
         return False
-
 
 def main():
     print(set_equal([1,[2,[3,4]]],[[[4,3],2],1]))                               # True
