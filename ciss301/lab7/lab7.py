@@ -75,30 +75,10 @@ class Graph:
     def check_hamilton(self):
         path = []
         visited = []
-        num_odd_degree = 0
-        start = None
-        for vertice in self.vertices.values():
-            if (len(vertice.connections)) % 2 != 0:
-                num_odd_degree += 1
-                start = vertice
-        if num_odd_degree == 0 or num_odd_degree == 2:
-            if num_odd_degree == 0:
-                start = list(self.vertices.values())[0]
-            while len(visited) != len(self.vertices):
-                print(len(visited), len(self.vertices))
-                i = 0
-                temp = start
-                visited.append(start)
-                if len(start.connections) > 0 and start.connections[i] not in visited:
-                    start = start.connections[i]
-                    for con in temp.connections:
-                        con.remove_connection(temp)
-                    temp.connections = []
-                    path.append([temp.name, start.name])
-                    i = 0
-                elif len(start.connections) > 0:
-                    i += 1
-        return path
+        
+        
+
+
 
 class Vertice:
     def __init__(self, name):
@@ -115,13 +95,12 @@ class Vertice:
         if connection not in self.connections:
             self.connections.append(connection)
 
-    def show_next_connections(self):
+    def show_connections(self):
         if len(self.connections) > 0:
             for n in self.connections:
                 print("%s -> %s" % (self.name, n.name))
         else:
             return None
-
 
 def Coloring(edges):
     graph = Graph(edges=edges)
@@ -139,16 +118,22 @@ def Hamilton(edges):
     return graph.check_hamilton()
 
 def main():
+    print("=======COLORING=======")
     print(Coloring([ [1,2], [1,3], [3,4], [3,5], [4,5], [2,5] ]))
     print(Coloring([ [1,2], [1,4], [1,5], [2,3], [2,5], [3,4], [3,5], [4,5], [3,1]]))
+    print(Coloring([ [1,2], [2,3], [3,4], [4,7], [7,6], [6,5], [5,1] ]))
+    print(Coloring([ [1,2], [2,3], [3,4], [4,7], [7,6], [6,5], [5,1], [4,8], [6,8] ]))
+    print(Coloring([ [1,2], [2,3], [3,4], [4,7], [7,9], [7,6], [9,5], [5,1], [2,8], [8,6] ]))
+    print("=======EULER=======")
     print(Euler([ [1,2], [1,3], [3,4], [3,5], [4,5], [2,5] ]))
     print(Euler([ [1,2], [2,3], [3,4], [4,7], [7,6], [6,5], [5,1] ]))
     print(Euler([ [1,2], [2,3], [3,4], [4,7], [7,6], [6,5], [5,1], [4,8], [6,8] ]))
     print(Euler([ [1,2], [2,3], [3,4], [4,7], [7,9], [7,6], [9,5], [5,1], [2,8], [8,6] ]))
+    print("=======HAMILTON=======")
     print(Hamilton([ [1,2], [1,3], [3,4], [3,5], [4,5], [2,5] ]))
     # print(Hamilton([ [1,2], [2,3], [3,4], [4,7], [7,6], [6,5], [5,1] ]))
-    # print(Hamilton([ [1,2], [2,3], [3,4], [4,7], [7,6], [6,5], [5,1], [4,8], [6,8] ]))
-    print(Hamilton([ [1,2], [2,3], [3,4], [4,7], [7,9], [7,6], [9,5], [5,1], [2,8], [8,6] ]))
+    print(Hamilton([ [1,2], [2,3], [3,4], [4,7], [7,6], [6,5], [5,1], [4,8], [6,8] ]))
+    # print(Hamilton([ [1,2], [2,3], [3,4], [4,7], [7,9], [7,6], [9,5], [5,1], [2,8], [8,6] ]))
     
 if __name__ == "__main__":
     main()
