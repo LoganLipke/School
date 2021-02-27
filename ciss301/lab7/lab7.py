@@ -81,7 +81,6 @@ class Graph:
             while len(path) != len(self.vertices)-1:
                 if start not in visited:
                     visited.append(start)
-                # print(start.name, path, i, len(start.connections))
                 if i < len(start.connections):
                     if start.connections[i] not in visited:
                         path.append([start.name, start.connections[i].name])
