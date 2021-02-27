@@ -71,13 +71,38 @@ class Graph:
                 else:
                     i += 1
         return path
-                
-    def check_hamilton(self):
-        path = []
-        visited = []
-        
-        
 
+    def check_hamilton(self):
+        for vertice in self.vertices.values():
+            start = vertice
+            path = []
+            visited = []
+            i = 0
+            while len(path) != len(self.vertices)-1:
+                if start not in visited:
+                    visited.append(start)
+                # print(start.name, path, i, len(start.connections))
+                if i < len(start.connections):
+                    if start.connections[i] not in visited:
+                        path.append([start.name, start.connections[i].name])
+                        start = start.connections[i]
+                        i = 0
+                    else:
+                        i += 1
+                else:
+                    start = self.vertices[path[-1][0]]
+                    path.pop()
+                    i = 0
+                    if len(path) == 0 and len(start.connections) > i+1:
+                        visited = []
+                        i += 1
+                    else:
+                        break
+            if len(path) == len(self.vertices)-1:
+                return path
+        if len(path) != len(self.vertices)-1:
+            path = []
+        return path
 
 
 class Vertice:
@@ -86,6 +111,7 @@ class Vertice:
         self.connections = []
         self.color = 0
     
+
     def remove_connection(self, connection):
         for vertice in self.connections:
             if vertice.name == connection.name:
@@ -131,9 +157,11 @@ def main():
     print(Euler([ [1,2], [2,3], [3,4], [4,7], [7,9], [7,6], [9,5], [5,1], [2,8], [8,6] ]))
     print("=======HAMILTON=======")
     print(Hamilton([ [1,2], [1,3], [3,4], [3,5], [4,5], [2,5] ]))
-    # print(Hamilton([ [1,2], [2,3], [3,4], [4,7], [7,6], [6,5], [5,1] ]))
+    print(Hamilton([ [1,2], [2,3], [3,4], [4,7], [7,6], [6,5], [5,1] ]))
     print(Hamilton([ [1,2], [2,3], [3,4], [4,7], [7,6], [6,5], [5,1], [4,8], [6,8] ]))
-    # print(Hamilton([ [1,2], [2,3], [3,4], [4,7], [7,9], [7,6], [9,5], [5,1], [2,8], [8,6] ]))
+    print(Hamilton([ [1,2], [2,3], [3,4], [4,7], [7,9], [7,6], [9,5], [5,1], [2,8], [8,6] ]))
+    print(Hamilton([ [1,2], [2,3], [3,4], [4,7], [7,6], [5,2] ]))
+
     
 if __name__ == "__main__":
     main()
