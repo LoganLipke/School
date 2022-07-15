@@ -1,0 +1,2 @@
+3,scan,Possible hostile scan detected
+4,dga_dns,Possible DGA generated DNS

@@ -1,0 +1,6 @@
+
+# Edit this file and type your solution where indicated, the code below is just an example
+run $(python -c "print '0'*24 + '\x99\x13\x40'")
+
+# Leave the code below in place
+quit

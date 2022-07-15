@@ -1,0 +1,1 @@
+Logan Lipke: I wrote the parts of the code that had to do with the token authentication and the end to end encryption.
