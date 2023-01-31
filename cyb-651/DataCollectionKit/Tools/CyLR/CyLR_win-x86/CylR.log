@@ -1,0 +1,73 @@
+2023-01-29T21:08:32 [debug] Argument OutputPath is set to .
+2023-01-29T21:08:32 [debug] Argument OutputFileName is set to DESKTOP-E5CUI82.zip
+2023-01-29T21:08:32 [debug] Argument UserName is set to 
+2023-01-29T21:08:32 [debug] Argument UserPassword is set to [omitted in log file]
+2023-01-29T21:08:32 [debug] Argument SFTPServer is set to 
+2023-01-29T21:08:32 [debug] Argument SFTPOutputPath is set to .
+2023-01-29T21:08:32 [debug] Argument SFTPCleanUp is set to True
+2023-01-29T21:08:32 [debug] Argument CollectionFilePath is set to .
+2023-01-29T21:08:32 [debug] Argument CollectDefaults is set to False
+2023-01-29T21:08:32 [debug] Argument ZipPassword is set to [omitted in log file]
+2023-01-29T21:08:32 [debug] Argument ZipLevel is set to 
+2023-01-29T21:08:32 [debug] Argument LogFilePath is set to CylR.log
+2023-01-29T21:08:32 [debug] Argument DisableLogging is set to False
+2023-01-29T21:08:32 [debug] Argument EnableVerboseConsole is set to False
+2023-01-29T21:08:32 [debug] Argument Usnjrnl is set to False
+2023-01-29T21:08:32 [debug] Argument ForceNative is set to False
+2023-01-29T21:08:32 [debug] Argument DryRun is set to False
+2023-01-29T21:08:32 [debug] Argument CollectionFiles is set to 
+2023-01-29T21:08:32 [info] Gathering paths to collect
+2023-01-29T21:08:32 [debug] Enumerating volumes on system
+2023-01-29T21:08:32 [debug] Identified volumes: C:\
+2023-01-29T21:08:32 [debug] Enumerating patterns for default artifact collection
+2023-01-29T21:08:32 [info] Windows platform detected
+2023-01-29T21:08:32 [debug] Enumerating file systems and matching patterns
+2023-01-29T21:08:32 [debug] Enumerating volume: C:\
+2023-01-29T21:12:24 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\Temp
+2023-01-29T21:12:24 [warn] Access is denied to one or more files in C:\Windows.old\Windows\Temp
+2023-01-29T21:12:24 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\SysWOW64\Tasks
+2023-01-29T21:12:24 [warn] Access is denied to one or more files in C:\Windows.old\Windows\SysWOW64\Tasks
+2023-01-29T21:12:24 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\SysWOW64\sru
+2023-01-29T21:12:24 [warn] Access is denied to one or more files in C:\Windows.old\Windows\SysWOW64\sru
+2023-01-29T21:12:24 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\SysWOW64\networklist
+2023-01-29T21:12:24 [warn] Access is denied to one or more files in C:\Windows.old\Windows\SysWOW64\networklist
+2023-01-29T21:12:24 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\SysWOW64\Msdtc
+2023-01-29T21:12:24 [warn] Access is denied to one or more files in C:\Windows.old\Windows\SysWOW64\Msdtc
+2023-01-29T21:12:24 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\SysWOW64\Configuration
+2023-01-29T21:12:24 [warn] Access is denied to one or more files in C:\Windows.old\Windows\SysWOW64\Configuration
+2023-01-29T21:12:24 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\SysWOW64\config
+2023-01-29T21:12:24 [warn] Access is denied to one or more files in C:\Windows.old\Windows\SysWOW64\config
+2023-01-29T21:12:24 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\SysWOW64\Com\dmp
+2023-01-29T21:12:24 [warn] Access is denied to one or more files in C:\Windows.old\Windows\SysWOW64\Com\dmp
+2023-01-29T21:12:24 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\SystemTemp
+2023-01-29T21:12:24 [warn] Access is denied to one or more files in C:\Windows.old\Windows\SystemTemp
+2023-01-29T21:12:27 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\System32\WDI
+2023-01-29T21:12:27 [warn] Access is denied to one or more files in C:\Windows.old\Windows\System32\WDI
+2023-01-29T21:12:27 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\System32\Tasks
+2023-01-29T21:12:27 [warn] Access is denied to one or more files in C:\Windows.old\Windows\System32\Tasks
+2023-01-29T21:12:27 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\System32\sru
+2023-01-29T21:12:27 [warn] Access is denied to one or more files in C:\Windows.old\Windows\System32\sru
+2023-01-29T21:12:27 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\System32\spool\SERVERS
+2023-01-29T21:12:27 [warn] Access is denied to one or more files in C:\Windows.old\Windows\System32\spool\SERVERS
+2023-01-29T21:12:27 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\System32\spool\PRINTERS
+2023-01-29T21:12:27 [warn] Access is denied to one or more files in C:\Windows.old\Windows\System32\spool\PRINTERS
+2023-01-29T21:12:27 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\System32\SleepStudy
+2023-01-29T21:12:27 [warn] Access is denied to one or more files in C:\Windows.old\Windows\System32\SleepStudy
+2023-01-29T21:12:27 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\System32\networklist
+2023-01-29T21:12:27 [warn] Access is denied to one or more files in C:\Windows.old\Windows\System32\networklist
+2023-01-29T21:12:27 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\System32\MsDtc
+2023-01-29T21:12:27 [warn] Access is denied to one or more files in C:\Windows.old\Windows\System32\MsDtc
+2023-01-29T21:12:27 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\System32\LogFiles\WMI\RtBackup
+2023-01-29T21:12:27 [warn] Access is denied to one or more files in C:\Windows.old\Windows\System32\LogFiles\WMI\RtBackup
+2023-01-29T21:12:27 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\System32\ias
+2023-01-29T21:12:27 [warn] Access is denied to one or more files in C:\Windows.old\Windows\System32\ias
+2023-01-29T21:12:29 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\System32\DriverState
+2023-01-29T21:12:29 [warn] Access is denied to one or more files in C:\Windows.old\Windows\System32\DriverState
+2023-01-29T21:12:29 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\System32\drivers\DriverData
+2023-01-29T21:12:29 [warn] Access is denied to one or more files in C:\Windows.old\Windows\System32\drivers\DriverData
+2023-01-29T21:12:29 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\System32\Configuration
+2023-01-29T21:12:29 [warn] Access is denied to one or more files in C:\Windows.old\Windows\System32\Configuration
+2023-01-29T21:12:29 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\System32\config
+2023-01-29T21:12:29 [warn] Access is denied to one or more files in C:\Windows.old\Windows\System32\config
+2023-01-29T21:12:29 [warn] Unable to enumerate all files and sub directories in C:\Windows.old\Windows\System32\Com\dmp
+2023-01-29T21:12:29 [warn] Access is denied to one or more files in C:\Windows.old\Windows\System32\Com\dmp
